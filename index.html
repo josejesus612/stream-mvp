@@ -33,7 +33,7 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-kv text-gray-900 font-body h-screen flex flex-col m-0 p-0 overflow-hidden">
+<body class="bg-kv text-gray-900 font-body md:h-screen flex flex-col m-0 p-0 md:overflow-hidden min-h-screen">
 
     <script>
         const SUPABASE_URL = "https://sevyhszayavaswpkrgbh.supabase.co";
@@ -41,8 +41,7 @@
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     </script>
 
-    <!-- PANTALLA 1: ACCESO (LOGIN / REGISTRO) -->
-    <div id="login-screen" class="flex-1 flex items-center justify-center p-4">
+    <div id="login-screen" class="flex-1 flex items-center justify-center p-4 min-h-screen">
         <div class="bg-[#422513] text-white p-8 rounded-2xl shadow-2xl w-full max-w-md border-t-8 border-[#e5a900]">
             
             <div class="text-center mb-6">
@@ -75,11 +74,10 @@
         </div>
     </div>
 
-    <!-- PANTALLA 2: DASHBOARD / STREAM INTERACTIVO -->
-    <div id="stream-screen" class="flex-1 flex flex-col md:flex-row hidden h-full overflow-hidden">
+    <div id="stream-screen" class="flex-1 flex flex-col md:flex-row hidden md:h-full md:overflow-hidden">
         
-        <div class="flex-1 flex flex-col p-4 space-y-4 h-full overflow-hidden">
-            <div class="flex-1 bg-black shadow-lg relative aspect-video md:aspect-auto border-4 border-[#422513] rounded-2xl overflow-hidden">
+        <div class="flex-1 flex flex-col p-4 space-y-4 md:h-full md:overflow-hidden shrink-0">
+            <div class="bg-black shadow-lg relative aspect-video border-4 border-[#422513] rounded-2xl overflow-hidden shrink-0">
                 <button id="logout-btn" class="absolute top-4 right-4 z-50 bg-red-600 hover:bg-red-700 text-white font-body font-bold text-xs px-4 py-2 uppercase tracking-wider shadow-lg transition rounded-xl">
                     Salir / Cerrar Sesión
                 </button>
@@ -91,20 +89,19 @@
                     <h1 class="font-title text-sm lg:text-base text-[#e5a900] uppercase tracking-wide">Comunidades de Internet de Boyacá</h1>
                     <p class="text-gray-300 text-xs sm:text-sm font-body mt-0.5">Iniciativa de la Comisión de Regulación de Comunicaciones (CRC)</p>
                 </div>
-                <!-- Botón interceptado para abrir el modal nativo -->
                 <button id="open-survey-btn" class="w-full sm:w-auto bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-sm px-6 py-3 transition text-center uppercase tracking-wider whitespace-nowrap rounded-xl shadow-sm">
                     Responder Encuesta
                 </button>
             </div>
         </div>
 
-        <div class="w-full md:w-80 bg-white md:my-4 md:mr-4 border-t-4 md:border-t-0 md:border-l-4 border-[#422513] flex flex-col h-1/3 md:h-[calc(100%-2rem)] shadow-xl shrink-0 rounded-2xl overflow-hidden">
-            <div class="p-3 bg-[#422513] text-[#e5a900] font-body font-bold text-sm uppercase tracking-wider text-center z-10 shadow-sm">
+        <div class="w-full md:w-80 bg-white md:my-4 md:mr-4 border-t-4 md:border-t-0 md:border-l-4 border-[#422513] flex flex-col min-h-[450px] md:h-[calc(100%-2rem)] shadow-xl shrink-0 rounded-2xl overflow-hidden mb-4 md:mb-0 mx-4 md:mx-0 w-[calc(100%-2rem)] md:w-80">
+            <div class="p-3 bg-[#422513] text-[#e5a900] font-body font-bold text-sm uppercase tracking-wider text-center z-10 shadow-sm shrink-0">
                 Preguntas en Vivo
             </div>
-            <div id="chat-messages-container" class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 no-scrollbar text-sm"></div>
+            <div id="chat-messages-container" class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 text-sm min-h-[300px] max-h-[400px] md:max-h-none"></div>
 
-            <form id="chat-form" class="p-3 bg-white border-t border-gray-200 flex gap-2 items-center">
+            <form id="chat-form" class="p-3 bg-white border-t border-gray-200 flex gap-2 items-center shrink-0">
                 <input type="text" id="chat-input" placeholder="Escribe tu pregunta aquí..." autocomplete="off" required 
                        class="flex-1 p-2.5 bg-gray-100 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#e5a900] text-sm">
                 <button type="submit" class="bg-[#422513] hover:bg-[#59331b] text-[#e5a900] p-2.5 rounded-xl transition shadow-sm shrink-0">
@@ -116,14 +113,12 @@
         </div>
     </div>
 
-    <!-- MODAL: ENCUESTA DE OPINIÓN CRC -->
-    <div id="survey-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden animate-fade-in">
+    <div id="survey-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl w-full max-w-2xl h-[90vh] flex flex-col shadow-2xl border-t-8 border-[#e5a900] overflow-hidden">
             
-            <!-- Cabecera fija -->
             <div class="p-5 bg-[#422513] text-white flex justify-between items-center shrink-0">
                 <div>
-                    <h3 class="font-title text-base text-[#e5a900] uppercase tracking-wider">ENCUESTA DE OPINIÓN</h3>
+                    <h3 class="font-title text-base text-[#e5a900] uppercase tracking-wider">ENCUESTA DE OPINIÓN</h3> [cite: 1]
                     <p class="text-xs text-gray-300 font-body">Encuentro Virtual Comunidades de Internet de Boyacá</p>
                 </div>
                 <button id="close-survey-btn" class="text-gray-400 hover:text-white p-1 rounded-lg transition">
@@ -133,59 +128,55 @@
                 </button>
             </div>
 
-            <!-- Contenido Escaneable / Scroll -->
             <form id="survey-form" class="flex-1 p-6 overflow-y-auto space-y-6 no-scrollbar text-sm text-gray-800">
                 
-                <!-- Datos Personales -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
                     <div>
-                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Nombre Completo</label>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Nombre Completo</label> [cite: 4]
                         <input type="text" name="nombre" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Empresa / Entidad</label>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Empresa / Entidad</label> [cite: 4]
                         <input type="text" name="empresa" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Cargo</label>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Cargo</label> [cite: 4]
                         <input type="text" name="cargo" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Teléfono</label>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Teléfono</label> [cite: 4]
                         <input type="tel" name="telefono" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Correo Electrónico</label>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Correo Electrónico</label> [cite: 4]
                         <input type="email" name="correo" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
                     </div>
                 </div>
 
-                <!-- Matriz de Calificación -->
                 <div>
-                    <p class="text-xs font-bold uppercase tracking-wider text-[#422513] mb-3">Por favor, califique de 1 a 5 los siguientes aspectos (5 Máximo - 1 Mínimo):</p>
-                    <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                        <table class="w-full text-left border-collapse">
+                    <p class="text-xs font-bold uppercase tracking-wider text-[#422513] mb-3">Por favor, califique de 1 a 5 los siguientes aspectos (5 Máximo - 1 Mínimo):</p> [cite: 5]
+                    <div class="border border-gray-200 rounded-xl overflow-x-auto shadow-sm">
+                        <table class="w-full text-left border-collapse min-w-[500px]">
                             <thead>
                                 <tr class="bg-gray-100 text-xs font-bold text-gray-600 uppercase border-b border-gray-200">
-                                    <th class="p-3">Aspecto</th>
-                                    <th class="p-3 text-center w-12">1</th>
-                                    <th class="p-3 text-center w-12">2</th>
-                                    <th class="p-3 text-center w-12">3</th>
-                                    <th class="p-3 text-center w-12">4</th>
-                                    <th class="p-3 text-center w-12">5</th>
+                                    <th class="p-3">Aspecto</th> [cite: 6]
+                                    <th class="p-3 text-center w-12">1</th> [cite: 6]
+                                    <th class="p-3 text-center w-12">2</th> [cite: 6]
+                                    <th class="p-3 text-center w-12">3</th> [cite: 6]
+                                    <th class="p-3 text-center w-12">4</th> [cite: 6]
+                                    <th class="p-3 text-center w-12">5</th> [cite: 6]
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-xs font-bold text-gray-700">
-                                <!-- Función helper para armar las filas rápido -->
                                 <script>
                                     const aspectos = [
-                                        { key: 'convocatoria', label: 'Convocatoria' },
-                                        { key: 'inscripcion', label: 'Inscripción' },
-                                        { key: 'importancia', label: 'Importancia de los temas tratados' },
-                                        { key: 'secuencia', label: 'Secuencia y metodología de los temas tratados' },
-                                        { key: 'respuestas', label: 'Respuestas a las preguntas' },
-                                        { key: 'cumplimiento', label: 'Cumplimiento de la agenda' },
-                                        { key: 'logistica', label: 'Atención del personal de logística' }
+                                        { key: 'convocatoria', label: 'Convocatoria' }, [cite: 6]
+                                        { key: 'inscripcion', label: 'Inscripción' }, [cite: 6]
+                                        { key: 'importancia', label: 'Importancia de los temas tratados' }, [cite: 6]
+                                        { key: 'secuencia', label: 'Secuencia y metodología de los temas tratados' }, [cite: 6]
+                                        { key: 'respuestas', label: 'Respuestas a las preguntas' }, [cite: 6]
+                                        { key: 'cumplimiento', label: 'Cumplimiento de la agenda' }, [cite: 6]
+                                        { key: 'logistica', label: 'Atención del personal de logística' } [cite: 6]
                                     ];
                                     aspectos.forEach(asp => {
                                         document.write(`
@@ -205,49 +196,44 @@
                     </div>
                 </div>
 
-                <!-- Pregunta Abierta 1 -->
                 <div>
-                    <label class="block text-xs uppercase font-bold text-gray-600 mb-2">¿Cuál tema tratado le pareció de mayor importancia y por qué?</label>
+                    <label class="block text-xs uppercase font-bold text-gray-600 mb-2">¿Cuál tema tratado le pareció de mayor importancia y por qué?</label> [cite: 7]
                     <textarea name="tema_mayor_importancia" required rows="3" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none resize-none"></textarea>
                 </div>
 
-                <!-- Nivel de Satisfacción -->
                 <div>
-                    <label class="block text-xs uppercase font-bold text-gray-600 mb-3">De manera general, ¿Cuál es su nivel de satisfacción con respecto al desarrollo del Foro?</label>
+                    <label class="block text-xs uppercase font-bold text-gray-600 mb-3">De manera general, ¿Cuál es su nivel de satisfacción con respecto al desarrollo del Foro?</label> [cite: 9]
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-bold text-gray-700">
                         <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
-                            <input type="radio" name="nivel_satisfaccion" value="Muy Satisfecho" required class="text-[#e5a900] focus:ring-[#e5a900]"> Muy Satisfecho
+                            <input type="radio" name="nivel_satisfaccion" value="Muy Satisfecho" required class="text-[#e5a900] focus:ring-[#e5a900]"> Muy Satisfecho [cite: 10]
                         </label>
                         <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
-                            <input type="radio" name="nivel_satisfaccion" value="Satisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Satisfecho
+                            <input type="radio" name="nivel_satisfaccion" value="Satisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Satisfecho [cite: 10]
                         </label>
                         <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
-                            <input type="radio" name="nivel_satisfaccion" value="Ni satisfecho ni insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Ni satisfecho ni insatisfecho
+                            <input type="radio" name="nivel_satisfaccion" value="Ni satisfecho ni insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Ni satisfecho ni insatisfecho [cite: 10]
                         </label>
                         <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
-                            <input type="radio" name="nivel_satisfaccion" value="Insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Insatisfecho
+                            <input type="radio" name="nivel_satisfaccion" value="Insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Insatisfecho [cite: 10]
                         </label>
                         <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition sm:col-span-2">
-                            <input type="radio" name="nivel_satisfaccion" value="Muy insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Muy insatisfecho
+                            <input type="radio" name="nivel_satisfaccion" value="Muy insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Muy insatisfecho [cite: 10]
                         </label>
                     </div>
                 </div>
 
-                <!-- Pregunta Abierta 2 -->
                 <div>
-                    <label class="block text-xs uppercase font-bold text-gray-600 mb-2">¿Por qué razón califica de este modo el Foro?</label>
+                    <label class="block text-xs uppercase font-bold text-gray-600 mb-2">¿Por qué razón califica de este modo el Foro?</label> [cite: 11]
                     <textarea name="razon_calificacion" required rows="3" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none resize-none"></textarea>
                 </div>
 
-                <!-- Tratamiento de Datos Personales (Aviso Legal Word) -->
                 <div class="bg-amber-50/50 border border-amber-200 p-4 rounded-xl text-[11px] text-gray-600 leading-relaxed space-y-1">
-                    <p class="font-bold text-amber-900 uppercase tracking-wide">Autorización Tratamiento de Datos Personales</p>
-                    <p>Tenga en cuenta que con su registro en el presente formulario la CRC entiende que usted autoriza que tratemos sus datos personales, con el fin de: i) conocer su percepción sobre las temáticas desarrolladas en el evento ii) invitarlo a los eventos organizados por la CRC, iii) generar estadísticas sobre las temáticas desarrolladas iv) enviarle información de interés emitida por la CRC. Para estos efectos, la CRC podrá almacenar, compartir, verificar, procesar, generar estadísticas y transmitir la información personal a todas aquellas entidades públicas o privadas que, de acuerdo con la normatividad o las relaciones contractuales vigentes, deban o puedan acceder a la misma.</p>
-                    <p>Para conocer y ejercer sus derechos la CRC lo invita a leer su política de protección de datos personales en su página web: <a href="https://www.crcom.gov.co" target="_blank" class="text-amber-800 underline font-bold">www.crcom.gov.co</a>.</p>
+                    <p class="font-bold text-amber-900 uppercase tracking-wide">Autorización Tratamiento de Datos Personales</p> [cite: 14]
+                    <p>Tenga en cuenta que con su registro en el presente formulario la CRC entiende que usted autoriza que tratemos sus datos personales, con el fin de: i) conocer su percepción sobre las temáticas desarrolladas en el evento ii) invitarlo a los eventos organizados por la CRC, iii) generar estadísticas sobre las temáticas desarrolladas iv) enviarle información de interés emitida por la CRC. [cite: 14] Para estos efectos, la CRC podrá almacenar, compartir, verificar, procesar, generar estadísticas y transmitir la información personal a todas aquellas entidades públicas o privadas que, de acuerdo con la normatividad o las relaciones contractuales vigentes, deban o puedan acceder a la misma.</p> [cite: 15]
+                    <p>Para conocer y ejercer sus derechos la CRC lo invita a leer su política de protección de datos personales en su página web: <a href="https://www.crcom.gov.co" target="_blank" class="text-amber-800 underline font-bold">www.crcom.gov.co</a>.</p> [cite: 16]
                 </div>
             </form>
 
-            <!-- Botones fijos inferiores -->
             <div class="p-4 bg-gray-50 border-t border-gray-200 flex gap-3 justify-end shrink-0">
                 <button type="button" id="cancel-survey-btn" class="px-5 py-2.5 rounded-xl border border-gray-300 font-bold text-gray-700 hover:bg-gray-100 text-xs uppercase tracking-wider transition">Cancelar</button>
                 <button type="submit" form="survey-form" id="submit-survey-btn" class="px-6 py-2.5 rounded-xl bg-[#422513] hover:bg-[#54301a] font-bold text-[#e5a900] text-xs uppercase tracking-wider shadow-sm transition">Enviar Encuesta</button>
@@ -271,7 +257,6 @@
         const chatInput = document.getElementById('chat-input');
         const messagesContainer = document.getElementById('chat-messages-container');
 
-        // Referencias del Modal de Encuesta
         const surveyModal = document.getElementById('survey-modal');
         const openSurveyBtn = document.getElementById('open-survey-btn');
         const closeSurveyBtn = document.getElementById('close-survey-btn');
@@ -281,7 +266,6 @@
 
         let currentMode = 'login';
 
-        // GESTIÓN DE TABS
         tabLogin.addEventListener('click', () => {
             currentMode = 'login';
             tabLogin.className = "flex-1 py-2.5 rounded-lg text-center bg-[#e5a900] text-[#422513] transition-all";
@@ -311,7 +295,6 @@
             }
         };
 
-        // ENVIÓ DE AUTENTICACIÓN
         authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             authMessage.classList.add('hidden');
@@ -363,7 +346,6 @@
             checkAuth();
         });
 
-        // --- MANEJO DEL MODAL DE LA ENCUESTA ---
         const toggleModal = (show) => {
             if (show) surveyModal.classList.remove('hidden');
             else surveyModal.classList.add('hidden');
@@ -381,7 +363,6 @@
             const formData = new FormData(surveyForm);
             const userCurrent = localStorage.getItem('crc_chat_username') || 'Anon';
 
-            // Mapeamos los datos del formulario al esquema exacto de Supabase
             const payload = {
                 username: userCurrent,
                 nombre: formData.get('nombre'),
@@ -415,7 +396,6 @@
             submitSurveyBtn.disabled = false;
         });
 
-        // --- LÓGICA DEL CHAT REALTIME ---
         const renderMessage = (username, message) => {
             const msgHtml = `
                 <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col gap-1">
