@@ -83,58 +83,64 @@
         </div>
     </div>
 
-    <!-- PANTALLA 2: DASHBOARD / STREAM INTERACTIVO (Estructura optimizada de 3 Columnas) -->
+    <!-- PANTALLA 2: DASHBOARD / STREAM INTERACTIVO -->
     <div id="stream-screen" class="flex-1 flex flex-col md:flex-row hidden md:h-full md:overflow-hidden">
         
-        <!-- COLUMNA 1: IDENTIDAD CORPORATIVA (Solo visible en escritorio para mantener presencia institucional de marca) -->
-        <div class="hidden lg:flex w-64 bg-white border-r-4 border-[#422513] flex-col items-center justify-center p-4 shrink-0 shadow-md">
+        <!-- COLUMNA 1: IDENTIDAD CORPORATIVA -->
+        <div class="hidden lg:flex w-56 bg-white border-r-4 border-[#422513] flex-col items-center justify-center p-4 shrink-0 shadow-md">
             <img src="./poster-boyaca.jpg" alt="CRC Boyacá" class="w-full h-auto object-contain rounded-xl shadow-sm">
         </div>
 
-        <!-- COLUMNA 2: VIDEO STREAMING Y ACCIONES (Contenedor Central) -->
-        <div id="video-container-wrapper" class="flex-1 flex flex-col p-4 space-y-4 md:h-full md:overflow-hidden shrink-0">
+        <!-- COLUMNA 2: VIDEO STREAMING Y ACCIONES (Con tamaño más controlado y elegante) -->
+        <div id="video-container-wrapper" class="flex-1 flex flex-col p-4 space-y-4 md:h-full md:overflow-y-auto items-center justify-center">
             
-            <!-- Contenedor del Reproductor con soporte Fullscreen -->
-            <div id="main-video-container" class="bg-black shadow-lg relative aspect-video border-4 border-[#422513] rounded-2xl overflow-hidden shrink-0">
-                
-                <!-- Barra de acciones superiores del reproductor -->
-                <div class="absolute top-4 right-4 z-50 flex gap-2">
-                    <button id="fullscreen-btn" class="bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-xs px-3 py-2 uppercase tracking-wider shadow-lg transition rounded-xl flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-                        </svg>
-                        Pantalla Completa
-                    </button>
-                    <button id="logout-btn" class="bg-red-600 hover:bg-red-700 text-white font-body font-bold text-xs px-4 py-2 uppercase tracking-wider shadow-lg transition rounded-xl">
-                        Salir
-                    </button>
+            <div class="w-full max-w-4xl flex flex-col space-y-4">
+                <!-- Contenedor del Reproductor con soporte Fullscreen -->
+                <div id="main-video-container" class="bg-black shadow-lg relative aspect-video border-4 border-[#422513] rounded-2xl overflow-hidden shrink-0 w-full">
+                    
+                    <!-- Barra de acciones superiores del reproductor -->
+                    <div class="absolute top-4 right-4 z-50 flex gap-2">
+                        <!-- Botón Inteligente de Pantalla Completa / Volver -->
+                        <button id="fullscreen-btn" class="bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-xs px-4 py-2.5 uppercase tracking-wider shadow-lg transition rounded-xl flex items-center gap-1.5">
+                            <span id="fs-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                                </svg>
+                            </span>
+                            <span id="fs-text">Pantalla Completa</span>
+                        </button>
+                        
+                        <!-- Botón Salir de Sesión (se ocultará automáticamente en Fullscreen) -->
+                        <button id="logout-btn" class="bg-red-600 hover:bg-red-700 text-white font-body font-bold text-xs px-4 py-2.5 uppercase tracking-wider shadow-lg transition rounded-xl">
+                            Salir
+                        </button>
+                    </div>
+                    
+                    <iframe id="video-iframe" class="w-full h-full" src="https://www.youtube.com/embed/live_stream?channel=UC_ID_DEL_CANAL" frameborder="0" allowfullscreen></iframe>
                 </div>
                 
-                <iframe id="video-iframe" class="w-full h-full" src="https://www.youtube.com/embed/live_stream?channel=UC_ID_DEL_CANAL" frameborder="0" allowfullscreen></iframe>
+                <!-- Información del evento y encuesta -->
+                <div class="flex flex-col sm:flex-row justify-between items-center bg-[#422513] text-white p-4 border-b-4 border-[#e5a900] gap-4 shrink-0 rounded-2xl shadow-md w-full">
+                    <div class="w-full sm:w-auto">
+                        <h1 class="font-title text-sm lg:text-base text-[#e5a900] uppercase tracking-wide">Comunidades de Internet de Boyacá</h1>
+                        <p class="text-gray-300 text-xs sm:text-sm font-body mt-0.5">Iniciativa de la Comisión de Regulación de Comunicaciones (CRC)</p>
+                    </div>
+                    <button id="open-survey-btn" class="w-full sm:w-auto bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-sm px-6 py-3 transition text-center uppercase tracking-wider whitespace-nowrap rounded-xl shadow-sm">
+                        Responder Encuesta
+                    </button>
+                </div>
             </div>
             
-            <!-- Información del evento y encuesta -->
-            <div class="flex flex-col sm:flex-row justify-between items-center bg-[#422513] text-white p-4 border-b-4 border-[#e5a900] gap-4 shrink-0 rounded-2xl shadow-md">
-                <div class="w-full sm:w-auto">
-                    <h1 class="font-title text-sm lg:text-base text-[#e5a900] uppercase tracking-wide">Comunidades de Internet de Boyacá</h1>
-                    <p class="text-gray-300 text-xs sm:text-sm font-body mt-0.5">Iniciativa de la Comisión de Regulación de Comunicaciones (CRC)</p>
-                </div>
-                <button id="open-survey-btn" class="w-full sm:w-auto bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-sm px-6 py-3 transition text-center uppercase tracking-wider whitespace-nowrap rounded-xl shadow-sm">
-                    Responder Encuesta
-                </button>
-            </div>
         </div>
 
-        <!-- COLUMNA 3: CHAT NATIVO REALTIME (Alineado simétricamente) -->
+        <!-- COLUMNA 3: CHAT NATIVO REALTIME -->
         <div class="mx-4 md:mx-0 md:mr-4 bg-white md:my-4 border-t-4 md:border-t-0 md:border-l-4 border-[#422513] flex flex-col min-h-[450px] md:h-[calc(100%-2rem)] shadow-xl shrink-0 rounded-2xl overflow-hidden mb-4 md:mb-0 w-[calc(100%-2rem)] md:w-80">
             <div class="p-3 bg-[#422513] text-[#e5a900] font-body font-bold text-sm uppercase tracking-wider text-center z-10 shadow-sm shrink-0">
                 Preguntas en Vivo
             </div>
             
-            <!-- Contenedor del historial con scroll interno -->
             <div id="chat-messages-container" class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 text-sm min-h-[300px] max-h-[400px] md:max-h-none"></div>
 
-            <!-- Formulario de chat -->
             <form id="chat-form" class="p-3 bg-white border-t border-gray-200 flex gap-2 items-center shrink-0">
                 <input type="text" id="chat-input" placeholder="Escribe tu pregunta aquí..." autocomplete="off" required 
                        class="flex-1 p-2.5 bg-gray-100 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#e5a900] text-sm">
@@ -300,6 +306,8 @@
 
         const mainVideoContainer = document.getElementById('main-video-container');
         const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const fsText = document.getElementById('fs-text');
+        const fsIcon = document.getElementById('fs-icon');
 
         let currentMode = 'login';
 
@@ -322,7 +330,29 @@
             authMessage.classList.add('hidden');
         });
 
-        // Funcionalidad nativa de Pantalla Completa para el contenedor del Video
+        // Control Inteligente de Pantalla Completa (Escucha cambios nativos del sistema)
+        const updateFullscreenUI = () => {
+            if (document.fullscreenElement) {
+                // Estamos en Pantalla Completa: Cambiar interfaz
+                logoutBtn.classList.add('hidden'); // Desaparece botón salir de sesión por seguridad
+                fsText.innerText = "Volver a la transmisión";
+                fsIcon.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25" />
+                    </svg>
+                `;
+            } else {
+                // Volvemos al estado normal
+                logoutBtn.classList.remove('hidden'); // Reaparece botón salir
+                fsText.innerText = "Pantalla Completa";
+                fsIcon.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                    </svg>
+                `;
+            }
+        };
+
         fullscreenBtn.addEventListener('click', () => {
             if (!document.fullscreenElement) {
                 mainVideoContainer.requestFullscreen().catch(err => {
@@ -332,6 +362,9 @@
                 document.exitFullscreen();
             }
         });
+
+        // Detectar si el usuario sale usando la tecla ESC nativa del sistema
+        document.addEventListener('fullscreenchange', updateFullscreenUI);
 
         const checkAuth = () => {
             if (localStorage.getItem('crc_stream_auth') === 'true') {
