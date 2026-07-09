@@ -41,7 +41,7 @@
         <div class="bg-[#422513] text-white p-8 rounded-none shadow-2xl w-full max-w-md border-t-8 border-[#e5a900]">
             <div class="text-center mb-6">
                 <span class="bg-[#e5a900] text-[#422513] font-bold px-3 py-1 text-xs tracking-wider uppercase font-body">¡Conéctate con la CRC!</span>
-                <h2 class="font-title text-xl mt-4 text-white uppercase tracking-tight">Encuentro Virtual</h2>
+                <h2 class="font-title text-xl mt-4 text-white uppercase tracking-normal leading-relaxed">Encuentro Virtual</h2>
                 <p class="text-gray-300 text-sm mt-1 font-body">Comunidades de Internet de Boyacá</p>
             </div>
             <form id="login-form" class="space-y-4">
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <!-- PANTALLA 2: DASHBOARD/STREAM (Oculto por defecto hasta hacer Login) -->
+    <!-- PANTALLA 2: DASHBOARD/STREAM -->
     <div id="stream-screen" class="flex-1 flex flex-col md:flex-row hidden h-full overflow-hidden">
         
         <!-- Columna Izquierda: Contenedor de Video y Franja de Acciones -->
@@ -68,21 +68,18 @@
             
             <!-- Zona del Video con Botón de Salida Flotante -->
             <div class="flex-1 bg-black shadow-lg relative aspect-video md:aspect-auto border-4 border-[#422513]">
-                <!-- Botón de Cerrar Sesión para limpiar el estado y volver al Login -->
                 <button id="logout-btn" class="absolute top-4 right-4 z-50 bg-red-600 hover:bg-red-700 text-white font-body font-bold text-xs px-4 py-2 uppercase tracking-wider shadow-lg transition">
                     Salir / Cerrar Sesión
                 </button>
-                <!-- IFRAME DEL STREAM (Se puede actualizar con el ID específico del evento) -->
                 <iframe class="w-full h-full" src="https://www.youtube.com/embed/live_stream?channel=UC_ID_DEL_CANAL" frameborder="0" allowfullscreen></iframe>
             </div>
             
-            <!-- Franja Informativa Inferior (Estilo Banner Marrón del KV) -->
+            <!-- Barra de Acciones Estilo Franja Inferior del KV -->
             <div class="flex flex-col sm:flex-row justify-between items-center bg-[#422513] text-white p-4 border-b-4 border-[#e5a900] gap-4 shrink-0">
                 <div class="w-full sm:w-auto">
-                    <h1 class="font-title text-sm lg:text-base text-[#e5a900] uppercase tracking-tight">Comunidades de Internet de Boyacá</h1>
+                    <h1 class="font-title text-sm lg:text-base text-[#e5a900] uppercase tracking-wide">Comunidades de Internet de Boyacá</h1>
                     <p class="text-gray-300 text-xs sm:text-sm font-body mt-0.5">Iniciativa de la Comisión de Regulación de Comunicaciones (CRC)</p>
                 </div>
-                <!-- Botón de Redirección a Formulario / Encuesta Externa -->
                 <a href="https://forms.google.com" target="_blank" class="w-full sm:w-auto bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-title text-xs px-6 py-3.5 transition text-center uppercase tracking-wider whitespace-nowrap">
                     Responder Encuesta
                 </a>
@@ -95,7 +92,6 @@
                 Preguntas en Vivo
             </div>
             <div class="flex-1 bg-gray-50">
-                <!-- EMBEBIDO DEL CHAT EXTERNO (Ej. Minnit Chat o iframe de YouTube Chat) -->
                 <div class="p-4 text-gray-400 text-sm text-center font-bold h-full flex items-center justify-center font-body">
                     Área del Chat en Vivo
                 </div>
@@ -109,7 +105,6 @@
         const loginForm = document.getElementById('login-form');
         const logoutBtn = document.getElementById('logout-btn');
 
-        // Función de control de estado del flujo de autenticación local
         const checkAuth = () => {
             if (localStorage.getItem('crc_stream_auth') === 'true') {
                 loginScreen.classList.add('hidden');
@@ -120,20 +115,17 @@
             }
         };
 
-        // Evento para procesar el ingreso
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             localStorage.setItem('crc_stream_auth', 'true');
             checkAuth();
         });
 
-        // Evento del botón salir para limpiar caché de login y retornar a la pantalla base
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('crc_stream_auth');
             checkAuth();
         });
 
-        // Inicialización del sistema
         checkAuth();
     </script>
 </body>
