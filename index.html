@@ -36,12 +36,12 @@
 <body class="bg-kv text-gray-900 font-body h-screen flex flex-col m-0 p-0 overflow-hidden">
 
     <script>
-        // CONFIGURACIÓN DE TU CONEXIÓN SUPABASE
         const SUPABASE_URL = "https://sevyhszayavaswpkrgbh.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNldnloc3pheWF2YXN3cGtyZ2JoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1OTk2NTAsImV4cCI6MjA5OTE3NTY1MH0.nlwy5d-c4zzQgOtWKSu8zpP22Sbv5G8f4q0FThfzGro";
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     </script>
 
+    <!-- PANTALLA 1: ACCESO (LOGIN / REGISTRO) -->
     <div id="login-screen" class="flex-1 flex items-center justify-center p-4">
         <div class="bg-[#422513] text-white p-8 rounded-2xl shadow-2xl w-full max-w-md border-t-8 border-[#e5a900]">
             
@@ -68,13 +68,14 @@
                 
                 <p id="auth-message" class="text-xs hidden text-center font-bold"></p>
                 
-                <button type="submit" id="auth-submit-btn" class="w-full bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-title py-3 text-xs transition uppercase tracking-wider rounded-xl shadow-md">
+                <button type="submit" id="auth-submit-btn" class="w-full bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold py-2.5 text-sm transition uppercase tracking-wide rounded-xl shadow-md">
                     Ingresar al Evento
                 </button>
             </form>
         </div>
     </div>
 
+    <!-- PANTALLA 2: DASHBOARD / STREAM INTERACTIVO -->
     <div id="stream-screen" class="flex-1 flex flex-col md:flex-row hidden h-full overflow-hidden">
         
         <div class="flex-1 flex flex-col p-4 space-y-4 h-full overflow-hidden">
@@ -90,9 +91,10 @@
                     <h1 class="font-title text-sm lg:text-base text-[#e5a900] uppercase tracking-wide">Comunidades de Internet de Boyacá</h1>
                     <p class="text-gray-300 text-xs sm:text-sm font-body mt-0.5">Iniciativa de la Comisión de Regulación de Comunicaciones (CRC)</p>
                 </div>
-                <a href="https://forms.google.com" target="_blank" class="w-full sm:w-auto bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-sm px-6 py-3 transition text-center uppercase tracking-wider whitespace-nowrap rounded-xl shadow-sm">
+                <!-- Botón interceptado para abrir el modal nativo -->
+                <button id="open-survey-btn" class="w-full sm:w-auto bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-sm px-6 py-3 transition text-center uppercase tracking-wider whitespace-nowrap rounded-xl shadow-sm">
                     Responder Encuesta
-                </a>
+                </button>
             </div>
         </div>
 
@@ -114,6 +116,145 @@
         </div>
     </div>
 
+    <!-- MODAL: ENCUESTA DE OPINIÓN CRC -->
+    <div id="survey-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden animate-fade-in">
+        <div class="bg-white rounded-2xl w-full max-w-2xl h-[90vh] flex flex-col shadow-2xl border-t-8 border-[#e5a900] overflow-hidden">
+            
+            <!-- Cabecera fija -->
+            <div class="p-5 bg-[#422513] text-white flex justify-between items-center shrink-0">
+                <div>
+                    <h3 class="font-title text-base text-[#e5a900] uppercase tracking-wider">ENCUESTA DE OPINIÓN</h3>
+                    <p class="text-xs text-gray-300 font-body">Encuentro Virtual Comunidades de Internet de Boyacá</p>
+                </div>
+                <button id="close-survey-btn" class="text-gray-400 hover:text-white p-1 rounded-lg transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Contenido Escaneable / Scroll -->
+            <form id="survey-form" class="flex-1 p-6 overflow-y-auto space-y-6 no-scrollbar text-sm text-gray-800">
+                
+                <!-- Datos Personales -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <div>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Nombre Completo</label>
+                        <input type="text" name="nombre" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Empresa / Entidad</label>
+                        <input type="text" name="empresa" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Cargo</label>
+                        <input type="text" name="cargo" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Teléfono</label>
+                        <input type="tel" name="telefono" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Correo Electrónico</label>
+                        <input type="email" name="correo" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
+                    </div>
+                </div>
+
+                <!-- Matriz de Calificación -->
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-[#422513] mb-3">Por favor, califique de 1 a 5 los siguientes aspectos (5 Máximo - 1 Mínimo):</p>
+                    <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-100 text-xs font-bold text-gray-600 uppercase border-b border-gray-200">
+                                    <th class="p-3">Aspecto</th>
+                                    <th class="p-3 text-center w-12">1</th>
+                                    <th class="p-3 text-center w-12">2</th>
+                                    <th class="p-3 text-center w-12">3</th>
+                                    <th class="p-3 text-center w-12">4</th>
+                                    <th class="p-3 text-center w-12">5</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 text-xs font-bold text-gray-700">
+                                <!-- Función helper para armar las filas rápido -->
+                                <script>
+                                    const aspectos = [
+                                        { key: 'convocatoria', label: 'Convocatoria' },
+                                        { key: 'inscripcion', label: 'Inscripción' },
+                                        { key: 'importancia', label: 'Importancia de los temas tratados' },
+                                        { key: 'secuencia', label: 'Secuencia y metodología de los temas tratados' },
+                                        { key: 'respuestas', label: 'Respuestas a las preguntas' },
+                                        { key: 'cumplimiento', label: 'Cumplimiento de la agenda' },
+                                        { key: 'logistica', label: 'Atención del personal de logística' }
+                                    ];
+                                    aspectos.forEach(asp => {
+                                        document.write(`
+                                            <tr class="hover:bg-gray-50/50">
+                                                <td class="p-3 font-medium text-gray-900">${asp.label}</td>
+                                                ${[1,2,3,4,5].map(num => `
+                                                    <td class="p-3 text-center">
+                                                        <input type="radio" name="calif_${asp.key}" value="${num}" required class="w-4 h-4 text-[#e5a900] focus:ring-[#e5a900] border-gray-300">
+                                                    </td>
+                                                `).join('')}
+                                            </tr>
+                                        `);
+                                    });
+                                </script>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pregunta Abierta 1 -->
+                <div>
+                    <label class="block text-xs uppercase font-bold text-gray-600 mb-2">¿Cuál tema tratado le pareció de mayor importancia y por qué?</label>
+                    <textarea name="tema_mayor_importancia" required rows="3" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none resize-none"></textarea>
+                </div>
+
+                <!-- Nivel de Satisfacción -->
+                <div>
+                    <label class="block text-xs uppercase font-bold text-gray-600 mb-3">De manera general, ¿Cuál es su nivel de satisfacción con respecto al desarrollo del Foro?</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-bold text-gray-700">
+                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
+                            <input type="radio" name="nivel_satisfaccion" value="Muy Satisfecho" required class="text-[#e5a900] focus:ring-[#e5a900]"> Muy Satisfecho
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
+                            <input type="radio" name="nivel_satisfaccion" value="Satisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Satisfecho
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
+                            <input type="radio" name="nivel_satisfaccion" value="Ni satisfecho ni insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Ni satisfecho ni insatisfecho
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
+                            <input type="radio" name="nivel_satisfaccion" value="Insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Insatisfecho
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition sm:col-span-2">
+                            <input type="radio" name="nivel_satisfaccion" value="Muy insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Muy insatisfecho
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pregunta Abierta 2 -->
+                <div>
+                    <label class="block text-xs uppercase font-bold text-gray-600 mb-2">¿Por qué razón califica de este modo el Foro?</label>
+                    <textarea name="razon_calificacion" required rows="3" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none resize-none"></textarea>
+                </div>
+
+                <!-- Tratamiento de Datos Personales (Aviso Legal Word) -->
+                <div class="bg-amber-50/50 border border-amber-200 p-4 rounded-xl text-[11px] text-gray-600 leading-relaxed space-y-1">
+                    <p class="font-bold text-amber-900 uppercase tracking-wide">Autorización Tratamiento de Datos Personales</p>
+                    <p>Tenga en cuenta que con su registro en el presente formulario la CRC entiende que usted autoriza que tratemos sus datos personales, con el fin de: i) conocer su percepción sobre las temáticas desarrolladas en el evento ii) invitarlo a los eventos organizados por la CRC, iii) generar estadísticas sobre las temáticas desarrolladas iv) enviarle información de interés emitida por la CRC. Para estos efectos, la CRC podrá almacenar, compartir, verificar, procesar, generar estadísticas y transmitir la información personal a todas aquellas entidades públicas o privadas que, de acuerdo con la normatividad o las relaciones contractuales vigentes, deban o puedan acceder a la misma.</p>
+                    <p>Para conocer y ejercer sus derechos la CRC lo invita a leer su política de protección de datos personales en su página web: <a href="https://www.crcom.gov.co" target="_blank" class="text-amber-800 underline font-bold">www.crcom.gov.co</a>.</p>
+                </div>
+            </form>
+
+            <!-- Botones fijos inferiores -->
+            <div class="p-4 bg-gray-50 border-t border-gray-200 flex gap-3 justify-end shrink-0">
+                <button type="button" id="cancel-survey-btn" class="px-5 py-2.5 rounded-xl border border-gray-300 font-bold text-gray-700 hover:bg-gray-100 text-xs uppercase tracking-wider transition">Cancelar</button>
+                <button type="submit" form="survey-form" id="submit-survey-btn" class="px-6 py-2.5 rounded-xl bg-[#422513] hover:bg-[#54301a] font-bold text-[#e5a900] text-xs uppercase tracking-wider shadow-sm transition">Enviar Encuesta</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const loginScreen = document.getElementById('login-screen');
         const streamScreen = document.getElementById('stream-screen');
@@ -130,9 +271,17 @@
         const chatInput = document.getElementById('chat-input');
         const messagesContainer = document.getElementById('chat-messages-container');
 
-        let currentMode = 'login'; // 'login' o 'register'
+        // Referencias del Modal de Encuesta
+        const surveyModal = document.getElementById('survey-modal');
+        const openSurveyBtn = document.getElementById('open-survey-btn');
+        const closeSurveyBtn = document.getElementById('close-survey-btn');
+        const cancelSurveyBtn = document.getElementById('cancel-survey-btn');
+        const surveyForm = document.getElementById('survey-form');
+        const submitSurveyBtn = document.getElementById('submit-survey-btn');
 
-        // CONTROL DE PESTAÑAS (TABS)
+        let currentMode = 'login';
+
+        // GESTIÓN DE TABS
         tabLogin.addEventListener('click', () => {
             currentMode = 'login';
             tabLogin.className = "flex-1 py-2.5 rounded-lg text-center bg-[#e5a900] text-[#422513] transition-all";
@@ -162,7 +311,7 @@
             }
         };
 
-        // GESTIÓN DEL ENVIÓ (MÉTODO DUAL: LOGIN O REGISTRO)
+        // ENVIÓ DE AUTENTICACIÓN
         authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             authMessage.classList.add('hidden');
@@ -172,8 +321,7 @@
             const passVal = document.getElementById('password').value.trim();
 
             if (currentMode === 'login') {
-                // FLUJO LOGIN
-                const { data, error } = await _supabase
+                const { data } = await _supabase
                     .from('usuarios_evento')
                     .select('*')
                     .eq('username', userVal)
@@ -191,19 +339,16 @@
                     authSubmitBtn.innerText = "Ingresar al Evento";
                 }
             } else {
-                // FLUJO REGISTRO DIRECTO EN PUBLIC
                 const { error } = await _supabase
                     .from('usuarios_evento')
                     .insert([{ username: userVal, password: passVal }]);
 
                 if (!error) {
-                    // Registro exitoso, ingresamos inmediatamente
                     localStorage.setItem('crc_stream_auth', 'true');
                     localStorage.setItem('crc_chat_username', userVal);
                     authSubmitBtn.innerText = "Crear Cuenta e Ingresar";
                     checkAuth();
                 } else {
-                    // Si el username ya existe (violación de unicidad)
                     authMessage.innerText = "El nombre de usuario ya está registrado.";
                     authMessage.className = "text-red-400 text-xs font-bold text-center";
                     authMessage.classList.remove('hidden');
@@ -216,6 +361,58 @@
             localStorage.removeItem('crc_stream_auth');
             localStorage.removeItem('crc_chat_username');
             checkAuth();
+        });
+
+        // --- MANEJO DEL MODAL DE LA ENCUESTA ---
+        const toggleModal = (show) => {
+            if (show) surveyModal.classList.remove('hidden');
+            else surveyModal.classList.add('hidden');
+        };
+
+        openSurveyBtn.addEventListener('click', () => toggleModal(true));
+        closeSurveyBtn.addEventListener('click', () => toggleModal(false));
+        cancelSurveyBtn.addEventListener('click', () => toggleModal(false));
+
+        surveyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            submitSurveyBtn.innerText = "Enviando...";
+            submitSurveyBtn.disabled = true;
+
+            const formData = new FormData(surveyForm);
+            const userCurrent = localStorage.getItem('crc_chat_username') || 'Anon';
+
+            // Mapeamos los datos del formulario al esquema exacto de Supabase
+            const payload = {
+                username: userCurrent,
+                nombre: formData.get('nombre'),
+                empresa: formData.get('empresa'),
+                cargo: formData.get('cargo'),
+                telefono: formData.get('telefono'),
+                correo: formData.get('correo'),
+                calif_convocatoria: parseInt(formData.get('calif_convocatoria')),
+                calif_inscripcion: parseInt(formData.get('calif_inscripcion')),
+                calif_importancia: parseInt(formData.get('calif_importancia')),
+                calif_secuencia: parseInt(formData.get('calif_secuencia')),
+                calif_respuestas: parseInt(formData.get('calif_respuestas')),
+                calif_cumplimiento: parseInt(formData.get('calif_cumplimiento')),
+                calif_logistica: parseInt(formData.get('calif_logistica')),
+                tema_mayor_importancia: formData.get('tema_mayor_importancia'),
+                nivel_satisfaccion: formData.get('nivel_satisfaccion'),
+                razon_calificacion: formData.get('razon_calificacion')
+            };
+
+            const { error } = await _supabase.from('encuestas_evento').insert([payload]);
+
+            if (!error) {
+                alert("¡Gracias! Tu encuesta ha sido enviada con éxito.");
+                surveyForm.reset();
+                toggleModal(false);
+            } else {
+                alert("Hubo un error al enviar la encuesta. Inténtalo de nuevo.");
+            }
+
+            submitSurveyBtn.innerText = "Enviar Encuesta";
+            submitSurveyBtn.disabled = false;
         });
 
         // --- LÓGICA DEL CHAT REALTIME ---
