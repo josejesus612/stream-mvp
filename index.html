@@ -22,13 +22,15 @@
         .font-title { font-family: 'Cimo Ones Exact', sans-serif; }
         .font-body { font-family: 'Barlow Condensed', sans-serif; }
 
+        /* NUEVO FONDO: Líneas onduladas fluidas inspiradas en el afiche oficial */
         .bg-kv {
             background-color: #fcfbfa;
-            background-image: radial-gradient(#e5a900 0.5px, transparent 0.5px), radial-gradient(#422513 0.5px, #fcfbfa 0.5px);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            opacity: 0.98;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23e1dfda' stroke-width='1.5' opacity='0.4' fill='none'%3E%3Cpath d='M-200,400 Q100,100 400,400 T1000,400 T1600,400 T2200,400' /%3E%3Cpath d='M-200,440 Q100,140 400,440 T1000,440 T1600,440 T2200,440' /%3E%3Cpath d='M-200,480 Q100,180 400,480 T1000,480 T1600,480 T2200,480' /%3E%3Cpath d='M-200,360 Q100,60 400,360 T1000,360 T1600,360 T2200,360' /%3E%3Cpath d='M-200,320 Q100,20 400,320 T1000,320 T1600,320 T2200,320' /%3E%3Cpath d='M-200,520 Q100,220 400,520 T1000,520 T1600,520 T2200,520' /%3E%3Cpath d='M-200,280 Q100,-20 400,280 T1000,280 T1600,280 T2200,280' /%3E%3Cpath d='M-200,560 Q100,260 400,560 T1000,560 T1600,560 T2200,560' /%3E%3C/g%3E%3C/svg%3E");
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
         }
+
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -82,7 +84,7 @@
 
     <div id="stream-screen" class="flex-1 flex flex-col md:flex-row hidden md:h-full md:overflow-hidden">
         
-        <div class="hidden lg:flex w-96 bg-white flex-col items-center justify-center p-4 shrink-0 shadow-md">
+        <div class="hidden lg:flex w-96 flex-col items-center justify-center p-4 shrink-0">
             <img src="./poster-boyaca.jpg" alt="CRC Boyacá" class="w-full h-auto object-contain rounded-xl">
         </div>
 
@@ -257,7 +259,7 @@
                 <div class="bg-amber-50/50 border border-amber-200 p-4 rounded-xl text-[11px] text-gray-600 leading-relaxed space-y-1">
                     <p class="font-bold text-amber-900 uppercase tracking-wide">Autorización Tratamiento de Datos Personales</p>
                     <p>Tenga en cuenta que con su registro en el presente formulario la CRC entiende que usted autoriza que tratemos sus datos personales, con el fin de: i) conocer su percepción sobre las temáticas desarrolladas en el evento ii) invitarlo a los eventos organizados por la CRC, iii) generar estadísticas sobre las temáticas desarrolladas iv) enviarle información de interés emitida por la CRC. Para estos efectos, la CRC podrá almacenar, compartir, verificar, procesar, generar estadísticas y transmitir la información personal a todas aquellas entidades públicas o privadas que, de acuerdo con la normatividad o las relaciones contractuales vigentes, deban o puedan acceder a la misma.</p>
-                    <p>Para conocer y ejercer sus derechos la CRC lo invita a leer su política de protección de datos personales en su página web: <a href="https://www.crcom.gov.co" target="_blank" class="text-amber-800 underline font-bold">www.crcom.gov.co</a>.</p>
+                    <p>Para conocer and ejercer sus derechos la CRC lo invita a leer su política de protección de datos personales en su página web: <a href="https://www.crcom.gov.co" target="_blank" class="text-amber-800 underline font-bold">www.crcom.gov.co</a>.</p>
                 </div>
             </form>
 
@@ -298,7 +300,6 @@
 
         let currentMode = 'login';
 
-        // Lógica de pestañas de Auth
         tabLogin.addEventListener('click', () => {
             currentMode = 'login';
             tabLogin.className = "flex-1 py-2.5 rounded-lg text-center bg-[#e5a900] text-[#422513] transition-all";
@@ -317,7 +318,6 @@
             authMessage.classList.add('hidden');
         });
 
-        // Control Inteligente de Pantalla Completa
         const updateFullscreenUI = () => {
             if (document.fullscreenElement) {
                 logoutBtn.classList.add('hidden'); 
