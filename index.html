@@ -22,13 +22,14 @@
         .font-title { font-family: 'Cimo Ones Exact', sans-serif; }
         .font-body { font-family: 'Barlow Condensed', sans-serif; }
 
-        /* NUEVO FONDO: Líneas onduladas fluidas inspiradas en el afiche oficial */
+        /* INTEGRACIÓN DE TU NUEVA IMAGEN DE FONDO */
         .bg-kv {
             background-color: #fcfbfa;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23e1dfda' stroke-width='1.5' opacity='0.4' fill='none'%3E%3Cpath d='M-200,400 Q100,100 400,400 T1000,400 T1600,400 T2200,400' /%3E%3Cpath d='M-200,440 Q100,140 400,440 T1000,440 T1600,440 T2200,440' /%3E%3Cpath d='M-200,480 Q100,180 400,480 T1000,480 T1600,480 T2200,480' /%3E%3Cpath d='M-200,360 Q100,60 400,360 T1000,360 T1600,360 T2200,360' /%3E%3Cpath d='M-200,320 Q100,20 400,320 T1000,320 T1600,320 T2200,320' /%3E%3Cpath d='M-200,520 Q100,220 400,520 T1000,520 T1600,520 T2200,520' /%3E%3Cpath d='M-200,280 Q100,-20 400,280 T1000,280 T1600,280 T2200,280' /%3E%3Cpath d='M-200,560 Q100,260 400,560 T1000,560 T1600,560 T2200,560' /%3E%3C/g%3E%3C/svg%3E");
+            background-image: url('./fondo_crc.png');
             background-attachment: fixed;
             background-size: cover;
-            background-position: center;
+            background-position: center center;
+            background-repeat: no-repeat;
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -43,13 +44,16 @@
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     </script>
 
+    <!-- PANTALLA 1: ACCESO (LOGIN / REGISTRO) -->
     <div id="login-screen" class="flex-1 flex items-center justify-center p-4 md:p-8 min-h-screen">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden flex flex-col md:flex-row border-4 border-[#422513]">
             
+            <!-- Columna Izquierda: Póster Oficial -->
             <div class="w-full md:w-1/2 bg-[#fcfbfa] flex items-center justify-center p-4 md:p-8 border-b-4 md:border-b-0 md:border-r-4 border-[#422513]">
                 <img src="./poster-boyaca.jpg" alt="Boyacá Encuentro Virtual CRC" class="w-full max-w-md h-auto object-contain rounded-xl shadow-md">
             </div>
 
+            <!-- Columna Derecha: Formulario de Autenticación -->
             <div class="w-full md:w-1/2 bg-[#422513] text-white p-8 flex flex-col justify-center">
                 <div class="text-center mb-6">
                     <span class="bg-[#e5a900] text-[#422513] font-bold px-3 py-1 text-xs tracking-wider uppercase font-body rounded-md">¡Conéctate con la CRC!</span>
@@ -82,18 +86,24 @@
         </div>
     </div>
 
+    <!-- PANTALLA 2: DASHBOARD / STREAM INTERACTIVO -->
     <div id="stream-screen" class="flex-1 flex flex-col md:flex-row hidden md:h-full md:overflow-hidden">
         
+        <!-- COLUMNA 1: IDENTIDAD CORPORATIVA (w-96 optimizado) -->
         <div class="hidden lg:flex w-96 flex-col items-center justify-center p-4 shrink-0">
             <img src="./poster-boyaca.jpg" alt="CRC Boyacá" class="w-full h-auto object-contain rounded-xl">
         </div>
 
+        <!-- COLUMNA 2: VIDEO STREAMING Y ACCIONES -->
         <div id="video-container-wrapper" class="flex-1 flex flex-col p-4 space-y-4 md:h-full md:overflow-y-auto items-center justify-center">
             
             <div class="w-full max-w-4xl flex flex-col space-y-4">
+                <!-- Contenedor del Reproductor con soporte Fullscreen -->
                 <div id="main-video-container" class="bg-black shadow-lg relative aspect-video border-4 border-[#422513] rounded-2xl overflow-hidden shrink-0 w-full">
                     
+                    <!-- Barra de acciones superiores del reproductor -->
                     <div class="absolute top-4 right-4 z-50 flex gap-2">
+                        <!-- Botón Inteligente de Pantalla Completa / Volver -->
                         <button id="fullscreen-btn" class="bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-xs px-4 py-2.5 uppercase tracking-wider shadow-lg transition rounded-xl flex items-center gap-1.5">
                             <span id="fs-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
@@ -103,6 +113,7 @@
                             <span id="fs-text">Pantalla Completa</span>
                         </button>
                         
+                        <!-- Botón Salir de Sesión -->
                         <button id="logout-btn" class="bg-red-600 hover:bg-red-700 text-white font-body font-bold text-xs px-4 py-2.5 uppercase tracking-wider shadow-lg transition rounded-xl">
                             Salir
                         </button>
@@ -111,6 +122,7 @@
                     <iframe id="video-iframe" class="w-full h-full" src="https://www.youtube.com/embed/live_stream?channel=UC_ID_DEL_CANAL" frameborder="0" allowfullscreen></iframe>
                 </div>
                 
+                <!-- Información del evento y encuesta -->
                 <div class="flex flex-col sm:flex-row justify-between items-center bg-[#422513] text-white p-4 border-b-4 border-[#e5a900] gap-4 shrink-0 rounded-2xl shadow-md w-full">
                     <div class="w-full sm:w-auto">
                         <h1 class="font-title text-sm lg:text-base text-[#e5a900] uppercase tracking-wide">Comunidades de Internet de Boyacá</h1>
@@ -124,6 +136,7 @@
             
         </div>
 
+        <!-- COLUMNA 3: CHAT NATIVO REALTIME -->
         <div class="mx-4 md:mx-0 md:mr-4 bg-white md:my-4 border-t-4 md:border-t-0 md:border-l-4 border-[#422513] flex flex-col min-h-[450px] md:h-[calc(100%-2rem)] shadow-xl shrink-0 rounded-2xl overflow-hidden mb-4 md:mb-0 w-[calc(100%-2rem)] md:w-80">
             <div class="p-3 bg-[#422513] text-[#e5a900] font-body font-bold text-sm uppercase tracking-wider text-center z-10 shadow-sm shrink-0">
                 Preguntas en Vivo
@@ -143,6 +156,7 @@
         </div>
     </div>
 
+    <!-- MODAL: ENCUESTA DE OPINIÓN CRC -->
     <div id="survey-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl w-full max-w-2xl h-[90vh] flex flex-col shadow-2xl border-t-8 border-[#e5a900] overflow-hidden">
             
@@ -259,7 +273,7 @@
                 <div class="bg-amber-50/50 border border-amber-200 p-4 rounded-xl text-[11px] text-gray-600 leading-relaxed space-y-1">
                     <p class="font-bold text-amber-900 uppercase tracking-wide">Autorización Tratamiento de Datos Personales</p>
                     <p>Tenga en cuenta que con su registro en el presente formulario la CRC entiende que usted autoriza que tratemos sus datos personales, con el fin de: i) conocer su percepción sobre las temáticas desarrolladas en el evento ii) invitarlo a los eventos organizados por la CRC, iii) generar estadísticas sobre las temáticas desarrolladas iv) enviarle información de interés emitida por la CRC. Para estos efectos, la CRC podrá almacenar, compartir, verificar, procesar, generar estadísticas y transmitir la información personal a todas aquellas entidades públicas o privadas que, de acuerdo con la normatividad o las relaciones contractuales vigentes, deban o puedan acceder a la misma.</p>
-                    <p>Para conocer and ejercer sus derechos la CRC lo invita a leer su política de protección de datos personales en su página web: <a href="https://www.crcom.gov.co" target="_blank" class="text-amber-800 underline font-bold">www.crcom.gov.co</a>.</p>
+                    <p>Para conocer y ejercer sus derechos la CRC lo invita a leer su política de protección de datos personales en su página web: <a href="https://www.crcom.gov.co" target="_blank" class="text-amber-800 underline font-bold">www.crcom.gov.co</a>.</p>
                 </div>
             </form>
 
