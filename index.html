@@ -41,37 +41,46 @@
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     </script>
 
-    <!-- PANTALLA 1: ACCESO (LOGIN / REGISTRO) -->
-    <div id="login-screen" class="flex-1 flex items-center justify-center p-4 min-h-screen">
-        <div class="bg-[#422513] text-white p-8 rounded-2xl shadow-2xl w-full max-w-md border-t-8 border-[#e5a900]">
+    <!-- PANTALLA 1: ACCESO (LOGIN / REGISTRO) - Rediseñado con el póster oficial -->
+    <div id="login-screen" class="flex-1 flex items-center justify-center p-4 md:p-8 min-h-screen">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden flex flex-col md:flex-row border-4 border-[#422513]">
             
-            <div class="text-center mb-6">
-                <span class="bg-[#e5a900] text-[#422513] font-bold px-3 py-1 text-xs tracking-wider uppercase font-body rounded-md">¡Conéctate con la CRC!</span>
-                <h2 class="font-title text-xl mt-4 text-white uppercase tracking-normal leading-relaxed">Encuentro Virtual</h2>
-                <p class="text-gray-300 text-sm mt-1 font-body">Comunidades de Internet de Boyacá</p>
+            <!-- Columna Izquierda: Póster Oficial (Ocupa el 50% en escritorio) -->
+            <div class="w-full md:w-1/2 bg-[#fcfbfa] flex items-center justify-center p-4 md:p-8 border-b-4 md:border-b-0 md:border-r-4 border-[#422513]">
+                <img src="./poster-boyaca.jpg" alt="Boyacá Encuentro Virtual CRC" class="w-full max-w-md h-auto object-contain rounded-xl shadow-md">
             </div>
 
-            <div class="flex bg-[#2d190d] p-1 rounded-xl mb-6 text-xs uppercase font-bold tracking-wider">
-                <button id="tab-login" class="flex-1 py-2.5 rounded-lg text-center bg-[#e5a900] text-[#422513] transition-all">Ingresar</button>
-                <button id="tab-register" class="flex-1 py-2.5 rounded-lg text-center text-gray-400 hover:text-white transition-all">Registrarse</button>
+            <!-- Columna Derecha: Formulario de Autenticación -->
+            <div class="w-full md:w-1/2 bg-[#422513] text-white p-8 flex flex-col justify-center">
+                <div class="text-center mb-6">
+                    <span class="bg-[#e5a900] text-[#422513] font-bold px-3 py-1 text-xs tracking-wider uppercase font-body rounded-md">¡Conéctate con la CRC!</span>
+                    <h2 class="font-title text-xl mt-4 text-white uppercase tracking-normal leading-relaxed">Encuentro Virtual</h2>
+                    <p class="text-gray-300 text-sm mt-1 font-body">Comunidades de Internet de Boyacá</p>
+                </div>
+
+                <div class="flex bg-[#2d190d] p-1 rounded-xl mb-6 text-xs uppercase font-bold tracking-wider">
+                    <button id="tab-login" class="flex-1 py-2.5 rounded-lg text-center bg-[#e5a900] text-[#422513] transition-all">Ingresar</button>
+                    <button id="tab-register" class="flex-1 py-2.5 rounded-lg text-center text-gray-400 hover:text-white transition-all">Registrarse</button>
+                </div>
+
+                <form id="auth-form" class="space-y-4">
+                    <div>
+                        <label id="label-username" class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Usuario de Acceso</label>
+                        <input type="text" id="username" required class="w-full p-3 rounded-xl bg-white text-gray-900 border-none focus:ring-2 focus:ring-[#e5a900] outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Contraseña</label>
+                        <input type="password" id="password" required class="w-full p-3 rounded-xl bg-white text-gray-900 border-none focus:ring-2 focus:ring-[#e5a900] outline-none">
+                    </div>
+                    
+                    <p id="auth-message" class="text-xs hidden text-center font-bold"></p>
+                    
+                    <button type="submit" id="auth-submit-btn" class="w-full bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold py-2.5 text-sm transition uppercase tracking-wide rounded-xl shadow-md">
+                        Ingresar al Evento
+                    </button>
+                </form>
             </div>
 
-            <form id="auth-form" class="space-y-4">
-                <div>
-                    <label id="label-username" class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Usuario de Acceso</label>
-                    <input type="text" id="username" required class="w-full p-3 rounded-xl bg-white text-gray-900 border-none focus:ring-2 focus:ring-[#e5a900] outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Contraseña</label>
-                    <input type="password" id="password" required class="w-full p-3 rounded-xl bg-white text-gray-900 border-none focus:ring-2 focus:ring-[#e5a900] outline-none">
-                </div>
-                
-                <p id="auth-message" class="text-xs hidden text-center font-bold"></p>
-                
-                <button type="submit" id="auth-submit-btn" class="w-full bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold py-2.5 text-sm transition uppercase tracking-wide rounded-xl shadow-md">
-                    Ingresar al Evento
-                </button>
-            </form>
         </div>
     </div>
 
@@ -98,8 +107,14 @@
             </div>
         </div>
 
-        <!-- Columna Derecha: CHAT NATIVO REALTIME (Centrado y Alineado) -->
+        <!-- Columna Derecha: CHAT NATIVO REALTIME -->
         <div class="mx-4 md:mx-0 md:mr-4 bg-white md:my-4 border-t-4 md:border-t-0 md:border-l-4 border-[#422513] flex flex-col min-h-[450px] md:h-[calc(100%-2rem)] shadow-xl shrink-0 rounded-2xl overflow-hidden mb-4 md:mb-0 w-[calc(100%-2rem)] md:w-80">
+            
+            <!-- MINI PÓSTER INTEGRADO: Añadido elegantemente arriba del chat en PC (se oculta en móvil para priorizar espacio) -->
+            <div class="hidden md:block w-full bg-[#fcfbfa] border-b border-gray-200 p-2 shrink-0">
+                <img src="./poster-boyaca.jpg" alt="Logo Evento" class="w-full h-32 object-cover object-top rounded-lg shadow-inner">
+            </div>
+
             <div class="p-3 bg-[#422513] text-[#e5a900] font-body font-bold text-sm uppercase tracking-wider text-center z-10 shadow-sm shrink-0">
                 Preguntas en Vivo
             </div>
