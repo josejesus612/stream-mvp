@@ -13,15 +13,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
-        /* Carga de la fuente de títulos exacta desde tu carpeta local en GitHub */
         @font-face {
             font-family: 'Cimo Ones Exact';
             src: url('./fonts/Cimo Ones.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
-
-        /* Asignación de clases tipográficas */
         .font-title { font-family: 'Cimo Ones Exact', sans-serif; }
         .font-body { font-family: 'Barlow Condensed', sans-serif; }
 
@@ -32,8 +29,6 @@
             background-position: 0 0, 20px 20px;
             opacity: 0.98;
         }
-        
-        /* Ocultar barra de scroll estética */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -41,7 +36,7 @@
 <body class="bg-kv text-gray-900 font-body h-screen flex flex-col m-0 p-0 overflow-hidden">
 
     <script>
-        // CONFIGURACIÓN OFICIAL DE TU PROYECTO SUPABASE
+        // CONFIGURACIÓN DE TU CONEXIÓN SUPABASE
         const SUPABASE_URL = "https://sevyhszayavaswpkrgbh.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNldnloc3pheWF2YXN3cGtyZ2JoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1OTk2NTAsImV4cCI6MjA5OTE3NTY1MH0.nlwy5d-c4zzQgOtWKSu8zpP22Sbv5G8f4q0FThfzGro";
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -49,21 +44,31 @@
 
     <div id="login-screen" class="flex-1 flex items-center justify-center p-4">
         <div class="bg-[#422513] text-white p-8 rounded-2xl shadow-2xl w-full max-w-md border-t-8 border-[#e5a900]">
+            
             <div class="text-center mb-6">
                 <span class="bg-[#e5a900] text-[#422513] font-bold px-3 py-1 text-xs tracking-wider uppercase font-body rounded-md">¡Conéctate con la CRC!</span>
                 <h2 class="font-title text-xl mt-4 text-white uppercase tracking-normal leading-relaxed">Encuentro Virtual</h2>
                 <p class="text-gray-300 text-sm mt-1 font-body">Comunidades de Internet de Boyacá</p>
             </div>
-            <form id="login-form" class="space-y-4">
+
+            <div class="flex bg-[#2d190d] p-1 rounded-xl mb-6 text-xs uppercase font-bold tracking-wider">
+                <button id="tab-login" class="flex-1 py-2.5 rounded-lg text-center bg-[#e5a900] text-[#422513] transition-all">Ingresar</button>
+                <button id="tab-register" class="flex-1 py-2.5 rounded-lg text-center text-gray-400 hover:text-white transition-all">Registrarse</button>
+            </div>
+
+            <form id="auth-form" class="space-y-4">
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Nombre Completo</label>
+                    <label id="label-username" class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Usuario de Acceso</label>
                     <input type="text" id="username" required class="w-full p-3 rounded-xl bg-white text-gray-900 border-none focus:ring-2 focus:ring-[#e5a900] outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Contraseña de Acceso</label>
+                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Contraseña</label>
                     <input type="password" id="password" required class="w-full p-3 rounded-xl bg-white text-gray-900 border-none focus:ring-2 focus:ring-[#e5a900] outline-none">
                 </div>
-                <button type="submit" class="w-full bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-title py-3 text-xs transition uppercase tracking-wider rounded-xl shadow-md">
+                
+                <p id="auth-message" class="text-xs hidden text-center font-bold"></p>
+                
+                <button type="submit" id="auth-submit-btn" class="w-full bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-title py-3 text-xs transition uppercase tracking-wider rounded-xl shadow-md">
                     Ingresar al Evento
                 </button>
             </form>
@@ -95,9 +100,7 @@
             <div class="p-3 bg-[#422513] text-[#e5a900] font-body font-bold text-sm uppercase tracking-wider text-center z-10 shadow-sm">
                 Preguntas en Vivo
             </div>
-            
-            <div id="chat-messages-container" class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 no-scrollbar text-sm">
-                </div>
+            <div id="chat-messages-container" class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 no-scrollbar text-sm"></div>
 
             <form id="chat-form" class="p-3 bg-white border-t border-gray-200 flex gap-2 items-center">
                 <input type="text" id="chat-input" placeholder="Escribe tu pregunta aquí..." autocomplete="off" required 
@@ -114,12 +117,39 @@
     <script>
         const loginScreen = document.getElementById('login-screen');
         const streamScreen = document.getElementById('stream-screen');
-        const loginForm = document.getElementById('login-form');
+        const authForm = document.getElementById('auth-form');
         const logoutBtn = document.getElementById('logout-btn');
+        const authMessage = document.getElementById('auth-message');
+        const authSubmitBtn = document.getElementById('auth-submit-btn');
         
+        const tabLogin = document.getElementById('tab-login');
+        const tabRegister = document.getElementById('tab-register');
+        const labelUsername = document.getElementById('label-username');
+
         const chatForm = document.getElementById('chat-form');
         const chatInput = document.getElementById('chat-input');
         const messagesContainer = document.getElementById('chat-messages-container');
+
+        let currentMode = 'login'; // 'login' o 'register'
+
+        // CONTROL DE PESTAÑAS (TABS)
+        tabLogin.addEventListener('click', () => {
+            currentMode = 'login';
+            tabLogin.className = "flex-1 py-2.5 rounded-lg text-center bg-[#e5a900] text-[#422513] transition-all";
+            tabRegister.className = "flex-1 py-2.5 rounded-lg text-center text-gray-400 hover:text-white transition-all";
+            labelUsername.innerText = "Usuario de Acceso";
+            authSubmitBtn.innerText = "Ingresar al Evento";
+            authMessage.classList.add('hidden');
+        });
+
+        tabRegister.addEventListener('click', () => {
+            currentMode = 'register';
+            tabRegister.className = "flex-1 py-2.5 rounded-lg text-center bg-[#e5a900] text-[#422513] transition-all";
+            tabLogin.className = "flex-1 py-2.5 rounded-lg text-center text-gray-400 hover:text-white transition-all";
+            labelUsername.innerText = "Elige tu Nombre de Usuario / Entidad";
+            authSubmitBtn.innerText = "Crear Cuenta e Ingresar";
+            authMessage.classList.add('hidden');
+        });
 
         const checkAuth = () => {
             if (localStorage.getItem('crc_stream_auth') === 'true') {
@@ -132,12 +162,54 @@
             }
         };
 
-        loginForm.addEventListener('submit', (e) => {
+        // GESTIÓN DEL ENVIÓ (MÉTODO DUAL: LOGIN O REGISTRO)
+        authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const userFieldValue = document.getElementById('username').value.trim();
-            localStorage.setItem('crc_stream_auth', 'true');
-            localStorage.setItem('crc_chat_username', userFieldValue); 
-            checkAuth();
+            authMessage.classList.add('hidden');
+            authSubmitBtn.innerText = "Procesando...";
+
+            const userVal = document.getElementById('username').value.trim();
+            const passVal = document.getElementById('password').value.trim();
+
+            if (currentMode === 'login') {
+                // FLUJO LOGIN
+                const { data, error } = await _supabase
+                    .from('usuarios_evento')
+                    .select('*')
+                    .eq('username', userVal)
+                    .eq('password', passVal);
+
+                if (data && data.length > 0) {
+                    localStorage.setItem('crc_stream_auth', 'true');
+                    localStorage.setItem('crc_chat_username', userVal); 
+                    authSubmitBtn.innerText = "Ingresar al Evento";
+                    checkAuth();
+                } else {
+                    authMessage.innerText = "Usuario o contraseña incorrectos.";
+                    authMessage.className = "text-red-400 text-xs font-bold text-center";
+                    authMessage.classList.remove('hidden');
+                    authSubmitBtn.innerText = "Ingresar al Evento";
+                }
+            } else {
+                // FLUJO REGISTRO DIRECTO EN PUBLIC
+                const { error } = await _supabase
+                    .from('usuarios_evento')
+                    .insert([{ username: userVal, password: passVal }]);
+
+                if (!error) {
+                    // Registro exitoso, ingresamos inmediatamente
+                    localStorage.setItem('crc_stream_auth', 'true');
+                    localStorage.setItem('crc_chat_username', userVal);
+                    authSubmitBtn.innerText = "Crear Cuenta e Ingresar";
+                    checkAuth();
+                } else {
+                    // Si el username ya existe (violación de unicidad)
+                    authMessage.innerText = "El nombre de usuario ya está registrado.";
+                    authMessage.className = "text-red-400 text-xs font-bold text-center";
+                    authMessage.classList.remove('hidden');
+                    authSubmitBtn.innerText = "Crear Cuenta e Ingresar";
+                }
+            }
         });
 
         logoutBtn.addEventListener('click', () => {
@@ -146,9 +218,50 @@
             checkAuth();
         });
 
-        // --- LÓGICA DEL CHAT NATIVO EN TIEMPO REAL ---
-        
+        // --- LÓGICA DEL CHAT REALTIME ---
         const renderMessage = (username, message) => {
             const msgHtml = `
                 <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col gap-1">
-                    <span class="font-bold text-xs text-
+                    <span class="font-bold text-xs text-[#422513] uppercase tracking-wide">${username}</span>
+                    <p class="text-gray-700 leading-snug">${message}</p>
+                </div>
+            `;
+            messagesContainer.insertAdjacentHTML('beforeend', msgHtml);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        };
+
+        const initChat = async () => {
+            messagesContainer.innerHTML = '<p class="text-center text-gray-400 text-xs py-4">Conectando al canal de preguntas...</p>';
+            
+            const { data } = await _supabase
+                .from('chat_messages')
+                .select('username, message')
+                .order('id', { ascending: true });
+
+            messagesContainer.innerHTML = '';
+            if (data) {
+                data.forEach(msg => renderMessage(msg.username, msg.message));
+            }
+
+            _supabase
+                .channel('public:chat_messages')
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_messages' }, payload => {
+                    renderMessage(payload.new.username, payload.new.message);
+                })
+                .subscribe();
+        };
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            const author = localStorage.getItem('crc_chat_username') || 'Invitado';
+            if (!text) return;
+
+            chatInput.value = ''; 
+            await _supabase.from('chat_messages').insert([{ username: author, message: text }]);
+        });
+
+        checkAuth();
+    </script>
+</body>
+</html>
