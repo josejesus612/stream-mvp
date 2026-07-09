@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRC - Encuentro Virtual Comunidades de Internet de Boyacá</title>
     
+    <!-- Fuente web de alta compatibilidad para emular Avenir Next Condensed en el cuerpo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet">
@@ -35,6 +36,7 @@
 </head>
 <body class="bg-kv text-gray-900 font-body h-screen flex flex-col m-0 p-0 overflow-hidden">
 
+    <!-- PANTALLA 1: LOGIN (Estilo Tarjeta Marrón con Bordes Suaves) -->
     <div id="login-screen" class="flex-1 flex items-center justify-center p-4">
         <div class="bg-[#422513] text-white p-8 rounded-2xl shadow-2xl w-full max-w-md border-t-8 border-[#e5a900]">
             <div class="text-center mb-6">
@@ -58,10 +60,13 @@
         </div>
     </div>
 
+    <!-- PANTALLA 2: DASHBOARD/STREAM -->
     <div id="stream-screen" class="flex-1 flex flex-col md:flex-row hidden h-full overflow-hidden">
         
+        <!-- Columna Izquierda: Contenedor de Video y Franja de Acciones -->
         <div class="flex-1 flex flex-col p-4 space-y-4 h-full overflow-hidden">
             
+            <!-- Zona del Video con Bordes Redondeados -->
             <div class="flex-1 bg-black shadow-lg relative aspect-video md:aspect-auto border-4 border-[#422513] rounded-2xl overflow-hidden">
                 <button id="logout-btn" class="absolute top-4 right-4 z-50 bg-red-600 hover:bg-red-700 text-white font-body font-bold text-xs px-4 py-2 uppercase tracking-wider shadow-lg transition rounded-xl">
                     Salir / Cerrar Sesión
@@ -69,6 +74,7 @@
                 <iframe class="w-full h-full" src="https://www.youtube.com/embed/live_stream?channel=UC_ID_DEL_CANAL" frameborder="0" allowfullscreen></iframe>
             </div>
             
+            <!-- Franja Informativa Inferior -->
             <div class="flex flex-col sm:flex-row justify-between items-center bg-[#422513] text-white p-4 border-b-4 border-[#e5a900] gap-4 shrink-0 rounded-2xl shadow-md">
                 <div class="w-full sm:w-auto">
                     <h1 class="font-title text-sm lg:text-base text-[#e5a900] uppercase tracking-wide">Comunidades de Internet de Boyacá</h1>
@@ -80,12 +86,14 @@
             </div>
         </div>
 
+        <!-- Columna Derecha: Panel de Interacción Directa con Padlet Oficial (100% en Español) -->
         <div class="w-full md:w-80 bg-white md:my-4 md:mr-4 border-t-4 md:border-t-0 md:border-l-4 border-[#422513] flex flex-col h-1/3 md:h-[calc(100%-2rem)] shadow-xl shrink-0 rounded-2xl overflow-hidden">
             <div class="p-3 bg-[#422513] text-[#e5a900] font-body font-bold text-sm uppercase tracking-wider text-center z-10 shadow-sm">
                 Preguntas en Vivo
             </div>
-            <div class="flex-1 bg-gray-50 overflow-hidden relative w-full h-full">
-                <iframe src="https://app.sli.do/event/p92kWuSCAeXeXr5sKPBdLD" class="w-full h-[104%] border-none relative" frameborder="0" allow="web-share"></iframe>
+            <div class="flex-1 bg-gray-50">
+                <!-- Enlace embebido oficial de tu muro interactivo -->
+                <iframe src="https://padlet.com/joseynestroza12/haz-una-pregunta-2915ir9etbwevdwb" class="w-full h-full border-none" frameborder="0" allow="camera; microphone; geolocation"></iframe>
             </div>
         </div>
     </div>
