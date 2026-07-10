@@ -118,7 +118,8 @@
                         </button>
                     </div>
                     
-                    <iframe id="video-iframe" class="w-full h-full" src="https://www.youtube.com/embed/live_stream?channel=UC_ID_DEL_CANAL" frameborder="0" allowfullscreen></iframe>
+                    <!-- ENLACE ACTUALIZADO DEL STREAM -->
+                    <iframe id="video-iframe" class="w-full h-full" src="https://www.youtube.com/embed/SpdtegfBAiY?si=uzD9BQUfWXF3YjNx" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
                 
                 <!-- Información del evento y encuesta -->
@@ -350,7 +351,6 @@
             }
         };
 
-        // NUEVA LÓGICA DE AUTENTICACIÓN (REGISTRO / ACCESO DIRECTO)
         authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             authMessage.classList.add('hidden');
@@ -360,7 +360,6 @@
             const juntaVal = document.getElementById('junta_accion_comunal').value.trim();
             const correoVal = document.getElementById('correo_electronico').value.trim();
 
-            // 1. Verificar si el correo ya existe en la base de datos
             const { data, error: selectError } = await _supabase
                 .from('usuarios_evento')
                 .select('*')
@@ -375,13 +374,11 @@
             }
 
             if (data && data.length > 0) {
-                // Si ya existe, usamos su nombre guardado para el chat e ingresamos
                 localStorage.setItem('crc_stream_auth', 'true');
                 localStorage.setItem('crc_chat_username', data[0].nombre_completo || nombreVal); 
                 authSubmitBtn.innerText = "Ingresar al Evento";
                 checkAuth();
             } else {
-                // 2. Si no existe, lo registramos automáticamente con las nuevas columnas
                 const { error: insertError } = await _supabase
                     .from('usuarios_evento')
                     .insert([{ 
