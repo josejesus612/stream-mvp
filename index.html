@@ -44,13 +44,16 @@
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     </script>
 
+    <!-- PANTALLA 1: ACCESO (FORMULARIO DIRECTO SIN CONTRASEÑA) -->
     <div id="login-screen" class="flex-1 flex items-center justify-center p-4 md:p-8 min-h-screen">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden flex flex-col md:flex-row border-4 border-[#422513]">
             
+            <!-- Columna Izquierda: Póster Oficial -->
             <div class="w-full md:w-1/2 bg-[#fcfbfa] flex items-center justify-center p-4 md:p-8 border-b-4 md:border-b-0 md:border-r-4 border-[#422513]">
                 <img src="./poster-boyaca.jpg" alt="Boyacá Encuentro Virtual CRC" class="w-full max-w-md h-auto object-contain rounded-xl shadow-md">
             </div>
 
+            <!-- Columna Derecha: Formulario de Registro / Ingreso -->
             <div class="w-full md:w-1/2 bg-[#422513] text-white p-8 flex flex-col justify-center">
                 <div class="text-center mb-6">
                     <span class="bg-[#e5a900] text-[#422513] font-bold px-3 py-1 text-xs tracking-wider uppercase font-body rounded-md">¡Conéctate con la CRC!</span>
@@ -82,18 +85,24 @@
         </div>
     </div>
 
+    <!-- PANTALLA 2: DASHBOARD / STREAM INTERACTIVO -->
     <div id="stream-screen" class="flex-1 flex flex-col md:flex-row hidden md:h-full md:overflow-hidden">
         
+        <!-- COLUMNA 1: IDENTIDAD CORPORATIVA -->
         <div class="hidden lg:flex w-96 flex-col items-center justify-center p-4 shrink-0">
             <img src="./poster-boyaca.jpg" alt="CRC Boyacá" class="w-full h-auto object-contain rounded-xl">
         </div>
 
+        <!-- COLUMNA 2: VIDEO STREAMING Y ACCIONES -->
         <div id="video-container-wrapper" class="flex-1 flex flex-col p-4 space-y-4 md:h-full md:overflow-y-auto items-center justify-center">
             
             <div class="w-full max-w-4xl flex flex-col space-y-4">
+                <!-- Contenedor del Reproductor -->
                 <div id="main-video-container" class="bg-black shadow-lg relative aspect-video border-4 border-[#422513] rounded-2xl overflow-hidden shrink-0 w-full">
                     
+                    <!-- Barra de acciones superiores del reproductor -->
                     <div class="absolute top-4 right-4 z-50 flex gap-2">
+                        <!-- Botón Inteligente de Pantalla Completa / Volver -->
                         <button id="fullscreen-btn" class="bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-xs px-4 py-2.5 uppercase tracking-wider shadow-lg transition rounded-xl flex items-center gap-1.5">
                             <span id="fs-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
@@ -103,14 +112,17 @@
                             <span id="fs-text">Pantalla Completa</span>
                         </button>
                         
+                        <!-- Botón Salir de Sesión -->
                         <button id="logout-btn" class="bg-red-600 hover:bg-red-700 text-white font-body font-bold text-xs px-4 py-2.5 uppercase tracking-wider shadow-lg transition rounded-xl">
                             Salir
                         </button>
                     </div>
                     
-                    <iframe id="video-iframe" class="w-full h-full" src="https://www.youtube.com/embed/QExHS2SpG1A?si=zpOB-jMyAp2m6LbN" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <!-- ENLACE ACTUALIZADO DEL NUEVO STREAM (zfwodcjNFj0) -->
+                    <iframe id="video-iframe" class="w-full h-full" src="https://www.youtube.com/embed/zfwodcjNFj0?si=dCXz1Vz4J2530IAz" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
                 
+                <!-- Información del evento y encuesta -->
                 <div class="flex flex-col sm:flex-row justify-between items-center bg-[#422513] text-white p-4 border-b-4 border-[#e5a900] gap-4 shrink-0 rounded-2xl shadow-md w-full">
                     <div class="w-full sm:w-auto">
                         <h1 class="font-title text-sm lg:text-base text-[#e5a900] uppercase tracking-wide">Comunidades de Internet de Boyacá</h1>
@@ -124,6 +136,7 @@
             
         </div>
 
+        <!-- COLUMNA 3: CHAT NATIVO REALTIME -->
         <div class="mx-4 md:mx-0 md:mr-4 bg-white md:my-4 border-t-4 md:border-t-0 md:border-l-4 border-[#422513] flex flex-col min-h-[450px] md:h-[calc(100%-2rem)] shadow-xl shrink-0 rounded-2xl overflow-hidden mb-4 md:mb-0 w-[calc(100%-2rem)] md:w-80">
             <div class="p-3 bg-[#422513] text-[#e5a900] font-body font-bold text-sm uppercase tracking-wider text-center z-10 shadow-sm shrink-0">
                 Preguntas en Vivo
@@ -143,6 +156,7 @@
         </div>
     </div>
 
+    <!-- MODAL: ENCUESTA DE OPINIÓN CRC -->
     <div id="survey-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl w-full max-w-2xl h-[90vh] flex flex-col shadow-2xl border-t-8 border-[#e5a900] overflow-hidden">
             
