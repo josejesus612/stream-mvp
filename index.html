@@ -209,9 +209,7 @@
                                         { key: 'inscripcion', label: 'Inscripción' },
                                         { key: 'importancia', label: 'Importancia de los temas tratados' },
                                         { key: 'secuencia', label: 'Secuencia y metodología de los temas tratados' },
-                                        { key: 'respuestas', label: 'Respuestas a las preguntas' },
-                                        { key: 'cumplimiento', label: 'Cumplimiento de la agenda' },
-                                        { key: 'logistica', label: 'Atención del personal de logística' }
+                                        { key: 'respuestas', label: 'Respuestas a las preguntas' }
                                     ];
                                     aspectos.forEach(asp => {
                                         document.write(`
@@ -423,8 +421,6 @@
                 calif_importancia: parseInt(formData.get('calif_importancia')),
                 calif_secuencia: parseInt(formData.get('calif_secuencia')),
                 calif_respuestas: parseInt(formData.get('calif_respuestas')),
-                calif_cumplimiento: parseInt(formData.get('calif_cumplimiento')),
-                calif_logistica: parseInt(formData.get('calif_logistica')),
                 tema_mayor_importancia: formData.get('tema_mayor_importancia'),
                 nivel_satisfaccion: formData.get('nivel_satisfaccion'),
                 razon_calificacion: formData.get('razon_calificacion')
