@@ -3,40 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRC - Encuentro Virtual Comunidades de Internet de Boyacá</title>
+    <title>CRC - Postdata: Datos para entender el sector</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Enlace a las fuentes convertidas por Transfonter -->
+    <link rel="stylesheet" href="css/stylesheet.css">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
-        @font-face {
-            font-family: 'Cimo Ones Exact';
-            src: url('./fonts/Cimo Ones.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
+        /* Definición de clases tipográficas basadas en tu stylesheet.css */
+        .font-title { 
+            font-family: 'Avenir Next Condensed', sans-serif; 
+            font-weight: 900; /* Heavy/Bold */
         }
-        .font-title { font-family: 'Cimo Ones Exact', sans-serif; }
-        .font-body { font-family: 'Barlow Condensed', sans-serif; }
+        .font-body { 
+            font-family: 'Avenir Next Condensed', sans-serif; 
+            font-weight: normal; /* Regular */
+        }
 
-        /* AJUSTE DEL FONDO: EFECTO LEJANO Y SUTIL */
+        /* EFECTO DE FONDO DEGRADADO INSPIRADO EN EL AFICHE DE POSTDATA */
         .bg-kv {
-            background-color: #fcfbfa;
-            background-image: url('./fondo_crc.png');
+            background-color: #0b0f19;
+            background-image: radial-gradient(circle at 20% 30%, #1e295d 0%, transparent 40%),
+                              radial-gradient(circle at 80% 70%, #111827 0%, transparent 50%);
             background-attachment: fixed;
-            background-size: 35%;
-            background-position: center center;
-            background-repeat: repeat;
+        }
+
+        /* Degradado especial para los paneles oscuros de la marca */
+        .bg-brand-dark {
+            background: linear-gradient(135deg, #0e172a 0%, #0a0f1d 100%);
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-kv text-gray-900 font-body md:h-screen flex flex-col m-0 p-0 md:overflow-hidden min-h-screen">
+<body class="bg-kv text-white font-body md:h-screen flex flex-col m-0 p-0 md:overflow-hidden min-h-screen">
 
     <script>
         const SUPABASE_URL = "https://sevyhszayavaswpkrgbh.supabase.co";
@@ -46,39 +49,39 @@
 
     <!-- PANTALLA 1: ACCESO (FORMULARIO DIRECTO SIN CONTRASEÑA) -->
     <div id="login-screen" class="flex-1 flex items-center justify-center p-4 md:p-8 min-h-screen">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden flex flex-col md:flex-row border-4 border-[#422513]">
+        <div class="bg-brand-dark/95 backdrop-blur-md rounded-3xl shadow-[0_0_50px_rgba(0,240,181,0.15)] w-full max-w-5xl overflow-hidden flex flex-col md:flex-row border-4 border-[#00f0b5]">
             
-            <!-- Columna Izquierda: Póster Oficial -->
-            <div class="w-full md:w-1/2 bg-[#fcfbfa] flex items-center justify-center p-4 md:p-8 border-b-4 md:border-b-0 md:border-r-4 border-[#422513]">
-                <img src="./poster-boyaca.jpg" alt="Boyacá Encuentro Virtual CRC" class="w-full max-w-md h-auto object-contain rounded-xl shadow-md">
+            <!-- Columna Izquierda: Imagen Transparente sobre Fondo Degradado Limpio -->
+            <div class="w-full md:w-1/2 bg-slate-950/40 flex items-center justify-center p-4 md:p-8 border-b-4 md:border-b-0 md:border-r-4 border-[#00f0b5]">
+                <img src="./EVENTO POSTDATA.png" alt="Postdata Taller CRC" class="w-full max-w-md h-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
             </div>
 
             <!-- Columna Derecha: Formulario de Registro / Ingreso -->
-            <div class="w-full md:w-1/2 bg-[#422513] text-white p-8 flex flex-col justify-center">
+            <div class="w-full md:w-1/2 p-8 flex flex-col justify-center">
                 <div class="text-center mb-6">
-                    <span class="bg-[#e5a900] text-[#422513] font-bold px-3 py-1 text-xs tracking-wider uppercase font-body rounded-md">¡Conéctate con la CRC!</span>
-                    <h2 class="font-title text-xl mt-4 text-white uppercase tracking-normal leading-relaxed">Encuentro Virtual</h2>
-                    <p class="text-gray-300 text-sm mt-1 font-body">Comunidades de Internet de Boyacá</p>
+                    <span class="bg-[#00f0b5] text-[#0a1128] font-title font-bold px-4 py-1.5 text-sm tracking-wider uppercase rounded-md shadow-sm">¡Conéctate con la CRC!</span>
+                    <h2 class="font-title text-3xl mt-4 text-white uppercase tracking-wider">Taller Virtual</h2>
+                    <p class="text-[#00f0b5] text-lg mt-1 font-body tracking-wide">Postdata: Datos para entender el sector</p>
                 </div>
 
                 <form id="auth-form" class="space-y-4">
                     <div>
-                        <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Nombre Completo</label>
-                        <input type="text" id="nombre_completo" required placeholder="Ej. Juan Pérez" class="w-full p-3 rounded-xl bg-white text-gray-900 border-none focus:ring-2 focus:ring-[#e5a900] outline-none text-sm">
+                        <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1 font-bold">Nombre Completo</label>
+                        <input type="text" id="nombre_completo" required placeholder="Ej. Juan Pérez" class="w-full p-3.5 rounded-xl bg-slate-900/80 text-white border border-slate-700 focus:border-[#00f0b5] focus:ring-2 focus:ring-[#00f0b5] outline-none text-sm transition-all">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Junta de Acción Comunal (JAC)</label>
-                        <input type="text" id="junta_accion_comunal" required placeholder="Ej. JAC Centro Tunja" class="w-full p-3 rounded-xl bg-white text-gray-900 border-none focus:ring-2 focus:ring-[#e5a900] outline-none text-sm">
+                        <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1 font-bold">Empresa / Entidad u Oficio</label>
+                        <input type="text" id="junta_accion_comunal" required placeholder="Ej. JAC Centro Tunja o Independiente" class="w-full p-3.5 rounded-xl bg-slate-900/80 text-white border border-slate-700 focus:border-[#00f0b5] focus:ring-2 focus:ring-[#00f0b5] outline-none text-sm transition-all">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Correo Electrónico</label>
-                        <input type="email" id="correo_electronico" required placeholder="ejemplo@correo.com" class="w-full p-3 rounded-xl bg-white text-gray-900 border-none focus:ring-2 focus:ring-[#e5a900] outline-none text-sm">
+                        <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1 font-bold">Correo Electrónico</label>
+                        <input type="email" id="correo_electronico" required placeholder="ejemplo@correo.com" class="w-full p-3.5 rounded-xl bg-slate-900/80 text-white border border-slate-700 focus:border-[#00f0b5] focus:ring-2 focus:ring-[#00f0b5] outline-none text-sm transition-all">
                     </div>
                     
                     <p id="auth-message" class="text-xs hidden text-center font-bold"></p>
                     
-                    <button type="submit" id="auth-submit-btn" class="w-full bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold py-3 text-sm transition uppercase tracking-wide rounded-xl shadow-md mt-2">
-                        Ingresar al Evento
+                    <button type="submit" id="auth-submit-btn" class="w-full bg-[#00f0b5] hover:bg-[#02d19f] text-[#0a1128] font-title font-bold py-3.5 text-base transition-all uppercase tracking-wider rounded-xl shadow-[0_4px_15px_rgba(0,240,181,0.3)] mt-2">
+                        Ingresar al Taller
                     </button>
                 </form>
             </div>
@@ -89,8 +92,8 @@
     <div id="stream-screen" class="flex-1 flex flex-col md:flex-row hidden md:h-full md:overflow-hidden">
         
         <!-- COLUMNA 1: IDENTIDAD CORPORATIVA -->
-        <div class="hidden lg:flex w-96 flex-col items-center justify-center p-4 shrink-0">
-            <img src="./poster-boyaca.jpg" alt="CRC Boyacá" class="w-full h-auto object-contain rounded-xl">
+        <div class="hidden lg:flex w-96 flex-col items-center justify-center p-6 shrink-0 bg-slate-950/30">
+            <img src="./EVENTO POSTDATA.png" alt="CRC Postdata" class="w-full h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,240,181,0.1)]">
         </div>
 
         <!-- COLUMNA 2: VIDEO STREAMING Y ACCIONES -->
@@ -98,12 +101,12 @@
             
             <div class="w-full max-w-4xl flex flex-col space-y-4">
                 <!-- Contenedor del Reproductor -->
-                <div id="main-video-container" class="bg-black shadow-lg relative aspect-video border-4 border-[#422513] rounded-2xl overflow-hidden shrink-0 w-full">
+                <div id="main-video-container" class="bg-black shadow-2xl relative aspect-video border-4 border-[#00f0b5] rounded-2xl overflow-hidden shrink-0 w-full">
                     
                     <!-- Barra de acciones superiores del reproductor -->
                     <div class="absolute top-4 right-4 z-50 flex gap-2">
                         <!-- Botón Inteligente de Pantalla Completa / Volver -->
-                        <button id="fullscreen-btn" class="bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-xs px-4 py-2.5 uppercase tracking-wider shadow-lg transition rounded-xl flex items-center gap-1.5">
+                        <button id="fullscreen-btn" class="bg-[#00f0b5] hover:bg-[#02d19f] text-[#0a1128] font-title font-bold text-xs px-4 py-2.5 uppercase tracking-wider shadow-lg transition rounded-xl flex items-center gap-1.5">
                             <span id="fs-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
@@ -113,7 +116,7 @@
                         </button>
                         
                         <!-- Botón Salir de Sesión -->
-                        <button id="logout-btn" class="bg-red-600 hover:bg-red-700 text-white font-body font-bold text-xs px-4 py-2.5 uppercase tracking-wider shadow-lg transition rounded-xl">
+                        <button id="logout-btn" class="bg-red-600 hover:bg-red-700 text-white font-title font-bold text-xs px-4 py-2.5 uppercase tracking-wider shadow-lg transition rounded-xl">
                             Salir
                         </button>
                     </div>
@@ -123,12 +126,12 @@
                 </div>
                 
                 <!-- Información del evento y encuesta -->
-                <div class="flex flex-col sm:flex-row justify-between items-center bg-[#422513] text-white p-4 border-b-4 border-[#e5a900] gap-4 shrink-0 rounded-2xl shadow-md w-full">
+                <div class="flex flex-col sm:flex-row justify-between items-center bg-brand-dark/90 text-white p-5 border-b-4 border-[#00f0b5] gap-4 shrink-0 rounded-2xl shadow-xl w-full">
                     <div class="w-full sm:w-auto">
-                        <h1 class="font-title text-sm lg:text-base text-[#e5a900] uppercase tracking-wide">Comunidades de Internet de Boyacá</h1>
-                        <p class="text-gray-300 text-xs sm:text-sm font-body mt-0.5">Iniciativa de la Comisión de Regulación de Comunicaciones (CRC)</p>
+                        <h1 class="font-title text-base lg:text-lg text-[#00f0b5] uppercase tracking-wider">Postdata: Datos para entender el sector</h1>
+                        <p class="text-gray-300 text-xs sm:text-sm font-body mt-0.5">Taller práctico de la Comisión de Regulación de Comunicaciones (CRC)</p>
                     </div>
-                    <button id="open-survey-btn" class="w-full sm:w-auto bg-[#e5a900] hover:bg-[#cc9600] text-[#422513] font-body font-bold text-sm px-6 py-3 transition text-center uppercase tracking-wider whitespace-nowrap rounded-xl shadow-sm">
+                    <button id="open-survey-btn" class="w-full sm:w-auto bg-[#00f0b5] hover:bg-[#02d19f] text-[#0a1128] font-title font-bold text-sm px-6 py-3 transition text-center uppercase tracking-wider whitespace-nowrap rounded-xl shadow-md">
                         Responder Encuesta
                     </button>
                 </div>
@@ -137,18 +140,18 @@
         </div>
 
         <!-- COLUMNA 3: CHAT NATIVO REALTIME -->
-        <div class="mx-4 md:mx-0 md:mr-4 bg-white md:my-4 border-t-4 md:border-t-0 md:border-l-4 border-[#422513] flex flex-col min-h-[450px] md:h-[calc(100%-2rem)] shadow-xl shrink-0 rounded-2xl overflow-hidden mb-4 md:mb-0 w-[calc(100%-2rem)] md:w-80">
-            <div class="p-3 bg-[#422513] text-[#e5a900] font-body font-bold text-sm uppercase tracking-wider text-center z-10 shadow-sm shrink-0">
+        <div class="mx-4 md:mx-0 md:mr-4 bg-slate-900 md:my-4 border-t-4 md:border-t-0 md:border-l-4 border-[#00f0b5] flex flex-col min-h-[450px] md:h-[calc(100%-2rem)] shadow-2xl shrink-0 rounded-2xl overflow-hidden mb-4 md:mb-0 w-[calc(100%-2rem)] md:w-80">
+            <div class="p-3.5 bg-brand-dark text-[#00f0b5] font-title font-bold text-sm uppercase tracking-wider text-center z-10 shadow-md shrink-0">
                 Preguntas en Vivo
             </div>
             
-            <div id="chat-messages-container" class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 text-sm min-h-[300px] max-h-[400px] md:max-h-none"></div>
+            <div id="chat-messages-container" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-950 text-sm min-h-[300px] max-h-[400px] md:max-h-none"></div>
 
-            <form id="chat-form" class="p-3 bg-white border-t border-gray-200 flex gap-2 items-center shrink-0">
+            <form id="chat-form" class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2 items-center shrink-0">
                 <input type="text" id="chat-input" placeholder="Escribe tu pregunta aquí..." autocomplete="off" required 
-                       class="flex-1 p-2.5 bg-gray-100 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#e5a900] text-sm">
-                <button type="submit" class="bg-[#422513] hover:bg-[#59331b] text-[#e5a900] p-2.5 rounded-xl transition shadow-sm shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                       class="flex-1 p-2.5 bg-slate-950 rounded-xl text-white placeholder-gray-500 border border-slate-800 focus:border-[#00f0b5] focus:outline-none focus:ring-1 focus:ring-[#00f0b5] text-sm">
+                <button type="submit" class="bg-[#00f0b5] hover:bg-[#02d19f] text-[#0a1128] p-2.5 rounded-xl transition shadow-md shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                     </svg>
                 </button>
@@ -157,13 +160,13 @@
     </div>
 
     <!-- MODAL: ENCUESTA DE OPINIÓN CRC -->
-    <div id="survey-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-2xl h-[90vh] flex flex-col shadow-2xl border-t-8 border-[#e5a900] overflow-hidden">
+    <div id="survey-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 rounded-2xl w-full max-w-2xl h-[90vh] flex flex-col shadow-[0_0_50px_rgba(0,0,0,0.8)] border-t-8 border-[#00f0b5] overflow-hidden text-white">
             
-            <div class="p-5 bg-[#422513] text-white flex justify-between items-center shrink-0">
+            <div class="p-5 bg-brand-dark text-white flex justify-between items-center shrink-0">
                 <div>
-                    <h3 class="font-title text-base text-[#e5a900] uppercase tracking-wider">ENCUESTA DE OPINIÓN</h3>
-                    <p class="text-xs text-gray-300 font-body">Encuentro Virtual Comunidades de Internet de Boyacá</p>
+                    <h3 class="font-title text-lg text-[#00f0b5] uppercase tracking-wider">ENCUESTA DE OPINIÓN</h3>
+                    <p class="text-xs text-gray-400 font-body">Taller Virtual Postdata: Datos para entender el sector</p>
                 </div>
                 <button id="close-survey-btn" class="text-gray-400 hover:text-white p-1 rounded-lg transition">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
@@ -172,36 +175,36 @@
                 </button>
             </div>
 
-            <form id="survey-form" class="flex-1 p-6 overflow-y-auto space-y-6 no-scrollbar text-sm text-gray-800">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
+            <form id="survey-form" class="flex-1 p-6 overflow-y-auto space-y-6 no-scrollbar text-sm text-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-950/50 p-4 rounded-xl border border-slate-800">
                     <div>
-                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Nombre Completo</label>
-                        <input type="text" name="nombre" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
+                        <label class="block text-xs uppercase font-bold text-gray-400 mb-1">Nombre Completo</label>
+                        <input type="text" name="nombre" required class="w-full p-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-[#00f0b5] focus:border-transparent outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Empresa / Entidad</label>
-                        <input type="text" name="empresa" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
+                        <label class="block text-xs uppercase font-bold text-gray-400 mb-1">Empresa / Entidad</label>
+                        <input type="text" name="empresa" required class="w-full p-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-[#00f0b5] focus:border-transparent outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Cargo</label>
-                        <input type="text" name="cargo" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
+                        <label class="block text-xs uppercase font-bold text-gray-400 mb-1">Cargo</label>
+                        <input type="text" name="cargo" required class="w-full p-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-[#00f0b5] focus:border-transparent outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Teléfono</label>
-                        <input type="tel" name="telefono" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
+                        <label class="block text-xs uppercase font-bold text-gray-400 mb-1">Teléfono</label>
+                        <input type="tel" name="telefono" required class="w-full p-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-[#00f0b5] focus:border-transparent outline-none">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Correo Electrónico</label>
-                        <input type="email" name="correo" required class="w-full p-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none">
+                        <label class="block text-xs uppercase font-bold text-gray-400 mb-1">Correo Electrónico</label>
+                        <input type="email" name="correo" required class="w-full p-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-[#00f0b5] focus:border-transparent outline-none">
                     </div>
                 </div>
 
                 <div>
-                    <p class="text-xs font-bold uppercase tracking-wider text-[#422513] mb-3">Por favor, califique de 1 a 5 los siguientes aspectos (5 Máximo - 1 Mínimo):</p>
-                    <div class="border border-gray-200 rounded-xl overflow-x-auto shadow-sm">
+                    <p class="text-xs font-bold uppercase tracking-wider text-[#00f0b5] mb-3">Por favor, califique de 1 a 5 los siguientes aspectos (5 Máximo - 1 Mínimo):</p>
+                    <div class="border border-slate-800 rounded-xl overflow-x-auto shadow-sm">
                         <table class="w-full text-left border-collapse min-w-[500px]">
                             <thead>
-                                <tr class="bg-gray-100 text-xs font-bold text-gray-600 uppercase border-b border-gray-200">
+                                <tr class="bg-slate-950 text-xs font-bold text-gray-400 uppercase border-b border-slate-800">
                                     <th class="p-3">Aspecto</th>
                                     <th class="p-3 text-center w-12">1</th>
                                     <th class="p-3 text-center w-12">2</th>
@@ -210,7 +213,7 @@
                                     <th class="p-3 text-center w-12">5</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100 text-xs font-bold text-gray-700">
+                            <tbody class="divide-y divide-slate-800 text-xs font-bold text-gray-300">
                                 <script>
                                     const aspectos = [
                                         { key: 'convocatoria', label: 'Convocatoria' },
@@ -223,11 +226,11 @@
                                     ];
                                     aspectos.forEach(asp => {
                                         document.write(`
-                                            <tr class="hover:bg-gray-50/50">
-                                                <td class="p-3 font-medium text-gray-900">${asp.label}</td>
+                                            <tr class="hover:bg-slate-950/30">
+                                                <td class="p-3 font-medium text-white">${asp.label}</td>
                                                 ${[1,2,3,4,5].map(num => `
                                                     <td class="p-3 text-center">
-                                                        <input type="radio" name="calif_${asp.key}" value="${num}" required class="w-4 h-4 text-[#e5a900] focus:ring-[#e5a900] border-gray-300">
+                                                        <input type="radio" name="calif_${asp.key}" value="${num}" required class="w-4 h-4 text-[#00f0b5] focus:ring-[#00f0b5] border-slate-700 bg-slate-900">
                                                     </td>
                                                 `).join('')}
                                             </tr>
@@ -240,46 +243,41 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs uppercase font-bold text-gray-600 mb-2">¿Cuál tema tratado le pareció de mayor importancia y por qué?</label>
-                    <textarea name="tema_mayor_importancia" required rows="3" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none resize-none"></textarea>
+                    <label class="block text-xs uppercase font-bold text-gray-300 mb-2">¿Cuál tema tratado le pareció de mayor importancia y por qué?</label>
+                    <textarea name="tema_mayor_importancia" required rows="3" class="w-full p-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-[#00f0b5] focus:border-transparent outline-none resize-none"></textarea>
                 </div>
 
                 <div>
-                    <label class="block text-xs uppercase font-bold text-gray-600 mb-3">De manera general, ¿Cuál es su nivel de satisfacción con respecto al desarrollo del Foro?</label>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-bold text-gray-700">
-                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
-                            <input type="radio" name="nivel_satisfaccion" value="Muy Satisfecho" required class="text-[#e5a900] focus:ring-[#e5a900]"> Muy Satisfecho
-                        </label>
-                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
-                            <input type="radio" name="nivel_satisfaccion" value="Satisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Satisfecho
-                        </label>
-                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
-                            <input type="radio" name="nivel_satisfaccion" value="Ni satisfecho ni insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Ni satisfecho ni insatisfecho
-                        </label>
-                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition">
-                            <input type="radio" name="nivel_satisfaccion" value="Insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Insatisfecho
-                        </label>
-                        <label class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-100 rounded-xl cursor-pointer hover:bg-gray-100/50 transition sm:col-span-2">
-                            <input type="radio" name="nivel_satisfaccion" value="Muy insatisfecho" class="text-[#e5a900] focus:ring-[#e5a900]"> Muy insatisfecho
-                        </label>
+                    <label class="block text-xs uppercase font-bold text-gray-300 mb-3">De manera general, ¿Cuál es su nivel de satisfacción con respecto al desarrollo del Foro?</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-bold text-gray-300">
+                        <script>
+                            const satisfacciones = ["Muy Satisfecho", "Satisfecho", "Ni satisfecho ni insatisfecho", "Insatisfecho", "Muy insatisfecho"];
+                            satisfacciones.forEach((sat, i) => {
+                                document.write(`
+                                    <label class="flex items-center gap-3 p-3 bg-slate-950/40 border border-slate-800 rounded-xl cursor-pointer hover:bg-slate-950 transition-all ${i === 4 ? 'sm:col-span-2' : ''}">
+                                        <input type="radio" name="nivel_satisfaccion" value="${sat}" required class="text-[#00f0b5] focus:ring-[#00f0b5] bg-slate-900 border-slate-700"> ${sat}
+                                    </label>
+                                `);
+                            });
+                        </script>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs uppercase font-bold text-gray-600 mb-2">¿Por qué razón califica de este modo el Foro?</label>
-                    <textarea name="razon_calificacion" required rows="3" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#e5a900] focus:border-transparent outline-none resize-none"></textarea>
+                    <label class="block text-xs uppercase font-bold text-gray-300 mb-2">¿Por qué razón califica de este modo el Foro?</label>
+                    <textarea name="razon_calificacion" required rows="3" class="w-full p-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-[#00f0b5] focus:border-transparent outline-none resize-none"></textarea>
                 </div>
 
-                <div class="bg-amber-50/50 border border-amber-200 p-4 rounded-xl text-[11px] text-gray-600 leading-relaxed space-y-1">
-                    <p class="font-bold text-amber-900 uppercase tracking-wide">Autorización Tratamiento de Datos Personales</p>
+                <div class="bg-slate-950/60 border border-slate-800 p-4 rounded-xl text-[11px] text-gray-400 leading-relaxed space-y-1">
+                    <p class="font-bold text-[#00f0b5] uppercase tracking-wide">Autorización Tratamiento de Datos Personales</p>
                     <p>Tenga en cuenta que con su registro en el presente formulario la CRC entiende que usted autoriza que tratemos sus datos personales, con el fin de: i) conocer su percepción sobre las temáticas desarrolladas en el evento ii) invitarlo a los eventos organizados por la CRC, iii) generar estadísticas sobre las temáticas desarrolladas iv) enviarle información de interés emitida por la CRC. Para estos efectos, la CRC podrá almacenar, compartir, verificar, procesar, generar estadísticas y transmitir la información personal a todas aquellas entidades públicas o privadas que, de acuerdo con la normatividad o las relaciones contractuales vigentes, deban o puedan acceder a la misma.</p>
-                    <p>Para conocer y ejercer sus derechos la CRC lo invita a leer su política de protección de datos personales en su página web: <a href="https://www.crcom.gov.co" target="_blank" class="text-amber-800 underline font-bold">www.crcom.gov.co</a>.</p>
+                    <p>Para conocer y ejercer sus derechos la CRC lo invita a leer su política de protección de datos personales en su página web: <a href="https://www.crcom.gov.co" target="_blank" class="text-[#00f0b5] underline font-bold">www.crcom.gov.co</a>.</p>
                 </div>
             </form>
 
-            <div class="p-4 bg-gray-50 border-t border-gray-200 flex gap-3 justify-end shrink-0">
-                <button type="button" id="cancel-survey-btn" class="px-5 py-2.5 rounded-xl border border-gray-300 font-bold text-gray-700 hover:bg-gray-100 text-xs uppercase tracking-wider transition">Cancelar</button>
-                <button type="submit" form="survey-form" id="submit-survey-btn" class="px-6 py-2.5 rounded-xl bg-[#422513] hover:bg-[#54301a] font-bold text-[#e5a900] text-xs uppercase tracking-wider shadow-sm transition">Enviar Encuesta</button>
+            <div class="p-4 bg-brand-dark border-t border-slate-800 flex gap-3 justify-end shrink-0">
+                <button type="button" id="cancel-survey-btn" class="px-5 py-2.5 rounded-xl border border-slate-700 font-bold text-gray-300 hover:bg-slate-800 text-xs uppercase tracking-wider transition">Cancelar</button>
+                <button type="submit" form="survey-form" id="submit-survey-btn" class="px-6 py-2.5 rounded-xl bg-[#00f0b5] hover:bg-[#02d19f] font-bold text-[#0a1128] text-xs uppercase tracking-wider shadow-md transition">Enviar Encuesta</button>
             </div>
         </div>
     </div>
@@ -369,14 +367,14 @@
                 authMessage.innerText = "Error de conexión. Inténtalo de nuevo.";
                 authMessage.className = "text-red-400 text-xs font-bold text-center";
                 authMessage.classList.remove('hidden');
-                authSubmitBtn.innerText = "Ingresar al Evento";
+                authSubmitBtn.innerText = "Ingresar al Taller";
                 return;
             }
 
             if (data && data.length > 0) {
                 localStorage.setItem('crc_stream_auth', 'true');
                 localStorage.setItem('crc_chat_username', data[0].nombre_completo || nombreVal); 
-                authSubmitBtn.innerText = "Ingresar al Evento";
+                authSubmitBtn.innerText = "Ingresar al Taller";
                 checkAuth();
             } else {
                 const { error: insertError } = await _supabase
@@ -390,13 +388,13 @@
                 if (!insertError) {
                     localStorage.setItem('crc_stream_auth', 'true');
                     localStorage.setItem('crc_chat_username', nombreVal);
-                    authSubmitBtn.innerText = "Ingresar al Evento";
+                    authSubmitBtn.innerText = "Ingresar al Taller";
                     checkAuth();
                 } else {
                     authMessage.innerText = "No se pudo completar el registro. Intenta de nuevo.";
                     authMessage.className = "text-red-400 text-xs font-bold text-center";
                     authMessage.classList.remove('hidden');
-                    authSubmitBtn.innerText = "Ingresar al Evento";
+                    authSubmitBtn.innerText = "Ingresar al Taller";
                 }
             }
         });
@@ -459,9 +457,9 @@
 
         const renderMessage = (username, message) => {
             const msgHtml = `
-                <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col gap-1">
-                    <span class="font-bold text-xs text-[#422513] uppercase tracking-wide">${username}</span>
-                    <p class="text-gray-700 leading-snug">${message}</p>
+                <div class="bg-slate-900 p-3.5 rounded-xl shadow-md border border-slate-800 flex flex-col gap-1.5">
+                    <span class="font-title font-bold text-xs text-[#00f0b5] uppercase tracking-wide">${username}</span>
+                    <p class="text-gray-200 leading-snug">${message}</p>
                 </div>
             `;
             messagesContainer.insertAdjacentHTML('beforeend', msgHtml);
